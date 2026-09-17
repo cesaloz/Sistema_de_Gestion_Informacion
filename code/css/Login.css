@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("IMG/image1-3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba (0, 0, 0, 0);
+    text-align: center;
+}
+
+input, button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #633ab6;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.user-avatar {
+    font-size: 5.9rem;
+    color: #633ab6;
+}
