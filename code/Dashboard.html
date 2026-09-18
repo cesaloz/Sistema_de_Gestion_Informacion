@@ -12,6 +12,7 @@
 
     <div class="dashboard-container">
 
+        <!-- ===== BARRA SUPERIOR ===== -->
         <header class="topbar">
             <div class="topbar-left">
                 <i class="fas fa-hospital-user logo-icon"></i>
@@ -32,26 +33,86 @@
 
         <div class="main-content">
 
+            <!-- ===== BARRA LATERAL CON SUBMENÚ ===== -->
             <aside class="sidebar">
                 <nav>
                     <ul>
-                        <li><a href="#" class="active"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
-                        <li><a href="#"><i class="fas fa-users"></i> Pacientes</a></li>
-                        <li><a href="#"><i class="fas fa-calendar-check"></i> Citas</a></li>
-                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                        <li>
+                            <a href="Dashboard.html" class="active">
+                                <i class="fas fa-chart-pie"></i> Inicio
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="pacientes.html">
+                                <i class="fas fa-users"></i> Pacientes
+                            </a>
+                        </li>
+
+                        <!-- ===== NUEVOS PACIENTES CON SUBMENÚ ===== -->
+                        <li class="has-submenu">
+                            <a href="HCHemato.html" class="menu-toggle" class="active" onclick="toggleSubmenu(event)">
+                                <i class="fas fa-user-plus"></i> Llenado de Historial
+                                <i class="fas fa-chevron-down arrow"></i>
+                            </a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="HCHemato.html#datos-personales">
+                                        <i class="fas fa-id-card"></i> HISTORIA CLÍNICA HEMATO
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="HCCirugia.html">
+                                        <i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGIA
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="HCMamografia.html">
+                                        <i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFIA
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="diagnostico.html">
+                                <i class="fas fa-stethoscope"></i> Diagnóstico
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="consulta.html">
+                                <i class="fas fa-comments"></i> Consulta
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="cirugia.html">
+                                <i class="fas fa-syringe"></i> Cirugía
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-file-medical"></i> Historiales
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </aside>
 
+            <!-- ===== CONTENIDO ===== -->
             <main class="content">
 
                 <div class="content-header">
-                    <h2>Resumen de Pacientes</h2>
-                    <button class="btn-primary">
-                        <i class="fas fa-plus"></i> Nuevo Paciente
-                    </button>
+                    <h2>Estadísticas Regionales</h2>
                 </div>
 
+                <div class="content-header">
+                    <h2>Resumen de Pacientes</h2>
+                </div>
+
+                <!-- ===== TARJETAS DE ESTADÍSTICAS ===== -->
                 <section class="stats-cards">
                     <div class="card">
                         <div class="card-icon blue"><i class="fas fa-users"></i></div>
@@ -86,6 +147,7 @@
                     </div>
                 </section>
 
+                <!-- ===== TABLA ===== -->
                 <section class="table-container">
                     <div class="table-header">
                         <h3>Últimos Pacientes Registrados</h3>
@@ -173,15 +235,22 @@
         </div>
     </div>
 
+    <!-- ===== SCRIPTS ===== -->
     <script>
+        /* ===== CERRAR SESIÓN ===== */
         function cerrarSesion() {
             if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
                 window.location.href = "login.html";
-                alert("Sesión cerrada correctamente.");
             }
+        }
+
+        /* ===== SUBMENÚ DESPLEGABLE ===== */
+        function toggleSubmenu(e) {
+            e.preventDefault();
+            const li = e.currentTarget.parentElement;
+            li.classList.toggle("open");
         }
     </script>
 
 </body>
-
 </html>

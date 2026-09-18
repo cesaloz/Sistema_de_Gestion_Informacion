@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONCOPATH - Pacientes</title>
+    <link rel="stylesheet" href="css/Pacientes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <i class="fas fa-hospital-user logo-icon"></i>
+                <h1>Oncopath</h1>
+            </div>
+
+            <div class="topbar-right">
+                <div class="user-info">
+                    <i class="fas fa-user-circle user-avatar"></i>
+                    <span class="user-name">Dra. Ana López</span>
+                </div>
+                <button class="logout-btn" onclick="cerrarSesion()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+
+            <!-- ===== MENÚ LATERAL ===== -->
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="Dashboard.html"><i class="fas fa-chart-pie"></i> Inicio</a></li>
+                        <li><a href="pacientes.html" class="active"><i class="fas fa-users"></i> Pacientes</a></li>
+
+                        <li class="has-submenu">
+                            <a href="HCHemato.html" class="menu-toggle" onclick="toggleSubmenu(event)">
+                                <i class="fas fa-user-plus"></i> Llenado de Historial
+                                <i class="fas fa-chevron-down arrow"></i>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="HCHemato.html#datos-personales"><i class="fas fa-id-card"></i> HISTORIA CLÍNICA HEMATO</a></li>
+                                <li><a href="HCHemato.html#datos-medicos"><i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGIA</a></li>
+                                <li><a href="HCHemato.html#plan-tratamiento"><i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFIA</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="diagnostico.html"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
+                        <li><a href="consulta.html"><i class="fas fa-comments"></i> Consulta</a></li>
+                        <li><a href="cirugia.html"><i class="fas fa-syringe"></i> Cirugía</a></li>
+                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- ===== CONTENIDO ===== -->
+            <main class="content">
+
+                <div class="content-header">
+                    <div>
+                        <h2>Lista de Pacientes</h2>
+                        <p class="subtitle">Gestiona todos los pacientes del sistema</p>
+                    </div>
+                </div>
+
+                <section class="filters-bar">
+                    <div class="filter-group">
+                        <label><i class="fas fa-search"></i> Buscar</label>
+                        <input type="text" id="buscador" placeholder="Nombre, cédula o diagnóstico..." oninput="filtrarTabla()">
+                    </div>
+
+                    <div class="filter-group">
+                        <label><i class="fas fa-filter"></i> Estado</label>
+                        <select id="filtroEstado" onchange="filtrarTabla()">
+                            <option value="">Todos</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="En Revisión">En Revisión</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label><i class="fas fa-calendar"></i> Ingreso</label>
+                        <input type="date" id="filtroFecha" onchange="filtrarTabla()">
+                    </div>
+
+                    <button class="clear-filters" onclick="limpiarFiltros()">
+                        <i class="fas fa-times"></i> Limpiar
+                    </button>
+                </section>
+
+                <section class="table-container">
+                    <div class="table-header">
+                        <h3>Lista de Pacientes <span class="count-badge" id="contador">5</span></h3>
+                        <span class="results-info" id="resultados">Mostrando 5 pacientes</span>
+                    </div>
+
+                    <table id="tablaPacientes">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Edad</th>
+                                <th>Diagnóstico</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#001</td>
+                                <td>Juan Pérez</td>
+                                <td>45</td>
+                                <td>Quimioterapia</td>
+                                <td>2025-04-10</td>
+                                <td><span class="badge active">Activo</span></td>
+                                <td>
+                                    <button class="action-btn view" onclick="verPaciente('Juan Pérez')"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" onclick="editarPaciente('Juan Pérez')"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" onclick="eliminarPaciente(this)"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#002</td>
+                                <td>María Gómez</td>
+                                <td>32</td>
+                                <td>Quimioterapia</td>
+                                <td>2025-04-09</td>
+                                <td><span class="badge active">Activo</span></td>
+                                <td>
+                                    <button class="action-btn view" onclick="verPaciente('María Gómez')"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" onclick="editarPaciente('María Gómez')"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" onclick="eliminarPaciente(this)"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#003</td>
+                                <td>Carlos Ruiz</td>
+                                <td>58</td>
+                                <td>Quimioterapia</td>
+                                <td>2025-04-08</td>
+                                <td><span class="badge inactive">Inactivo</span></td>
+                                <td>
+                                    <button class="action-btn view" onclick="verPaciente('Carlos Ruiz')"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" onclick="editarPaciente('Carlos Ruiz')"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" onclick="eliminarPaciente(this)"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#004</td>
+                                <td>Lucía Fernández</td>
+                                <td>27</td>
+                                <td>Quimioterapia</td>
+                                <td>2025-04-07</td>
+                                <td><span class="badge active">Activo</span></td>
+                                <td>
+                                    <button class="action-btn view" onclick="verPaciente('Lucía Fernández')"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" onclick="editarPaciente('Lucía Fernández')"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" onclick="eliminarPaciente(this)"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#005</td>
+                                <td>Pedro Martínez</td>
+                                <td>61</td>
+                                <td>Quimioterapia</td>
+                                <td>2025-04-06</td>
+                                <td><span class="badge pending">En Revisión</span></td>
+                                <td>
+                                    <button class="action-btn view" onclick="verPaciente('Pedro Martínez')"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" onclick="editarPaciente('Pedro Martínez')"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" onclick="eliminarPaciente(this)"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="empty-state" id="emptyState" style="display:none;">
+                        <i class="fas fa-user-slash"></i>
+                        <p>No se encontraron pacientes con esos filtros.</p>
+                    </div>
+                </section>
+
+                <div class="pagination">
+                    <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function cerrarSesion() {
+            if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                window.location.href = "login.html";
+            }
+        }
+
+        function toggleSubmenu(e) {
+            e.preventDefault();
+            const li = e.currentTarget.parentElement;
+            li.classList.toggle("open");
+        }
+
+        function verPaciente(nombre) {
+            alert(`👁️ Viendo ficha de: ${nombre}`);
+        }
+
+        function editarPaciente(nombre) {
+            alert(`✏️ Editando a: ${nombre}`);
+        }
+
+        function eliminarPaciente(boton) {
+            const fila = boton.closest("tr");
+            const nombre = fila.cells[1].textContent;
+            if (confirm(`¿Estás seguro de eliminar a "${nombre}"?`)) {
+                fila.remove();
+                actualizarContador();
+            }
+        }
+
+        function filtrarTabla() {
+            const texto = document.getElementById("buscador").value.toLowerCase();
+            const estadoFiltro = document.getElementById("filtroEstado").value;
+            const fechaFiltro = document.getElementById("filtroFecha").value;
+
+            const filas = document.querySelectorAll("#tablaPacientes tbody tr");
+            let visibles = 0;
+
+            filas.forEach(fila => {
+                const celdas = fila.cells;
+                const nombre = celdas[1].textContent.toLowerCase();
+                const cedula = celdas[0].textContent.toLowerCase();
+                const diagnostico = celdas[3].textContent.toLowerCase();
+                const estado = celdas[5].textContent.trim();
+                const fecha = celdas[4].textContent;
+
+                const coincideTexto = nombre.includes(texto) || cedula.includes(texto) || diagnostico.includes(texto);
+                const coincideEstado = !estadoFiltro || estado === estadoFiltro;
+                const coincideFecha = !fechaFiltro || fecha === fechaFiltro;
+
+                if (coincideTexto && coincideEstado && coincideFecha) {
+                    fila.style.display = "";
+                    visibles++;
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+
+            document.getElementById("resultados").textContent = `Mostrando ${visibles} paciente(s)`;
+            document.getElementById("emptyState").style.display = visibles === 0 ? "block" : "none";
+        }
+
+        function limpiarFiltros() {
+            document.getElementById("buscador").value = "";
+            document.getElementById("filtroEstado").value = "";
+            document.getElementById("filtroFecha").value = "";
+            filtrarTabla();
+        }
+
+        function actualizarContador() {
+            const total = document.querySelectorAll("#tablaPacientes tbody tr").length;
+            document.getElementById("contador").textContent = total;
+        }
+    </script>
+
+</body>
+</html>
