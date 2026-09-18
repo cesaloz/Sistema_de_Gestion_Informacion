@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONCOPATH - Nuevos Pacientes</title>
+    <link rel="stylesheet" href="css/HCHemato.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <i class="fas fa-hospital-user logo-icon"></i>
+                <h1>Oncopath</h1>
+            </div>
+
+            <div class="topbar-right">
+                <div class="user-info">
+                    <i class="fas fa-user-circle user-avatar"></i>
+                    <span class="user-name">Dra. Ana López</span>
+                </div>
+                <button class="logout-btn" onclick="cerrarSesion()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+
+            <!-- ===== BARRA LATERAL CON SUBMENÚ ===== -->
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="Dashboard.html"><i class="fas fa-chart-pie"></i> Inicio</a></li>
+                        <li><a href="pacientes.html"><i class="fas fa-users"></i> Pacientes</a></li>
+
+                        <li class="has-submenu open">
+                            <a href="HCHemato.html" class="active menu-toggle" onclick="toggleSubmenu(event)">
+                                <i class="fas fa-user-plus"></i> Llenado de Historial
+                                <i class="fas fa-chevron-down arrow"></i>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="#datos-personales" class="active1" onclick="mostrarTab(event, 'datos-personales')"><i class="fas fa-id-card"></i> HISTORIA CLÍNICA HEMATO</a></li>
+                                <li><a href="HCCirugia.html" ><i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGIA</a></li>
+                                <li><a href="HCMamografia.html" ><i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFIA</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="diagnostico.html"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
+                        <li><a href="consulta.html"><i class="fas fa-comments"></i> Consulta</a></li>
+                        <li><a href="cirugia.html"><i class="fas fa-syringe"></i> Cirugía</a></li>
+                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- ===== CONTENIDO ===== -->
+            <main class="content">
+
+                <div class="content-header">
+                    <div>
+                        <h2>REGISTRO DE HISTORIA CLÍNICA HEMATO - ONCOLOGÍA</h2>
+                        <p class="subtitle">Complete todos los datos para registrar al paciente en el sistema</p>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="window.location.href='pacientes.html'">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                </div>
+
+                <!-- ===== PESTAÑAS ===== -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" onclick="mostrarTab(event, 'datos-personales')">
+                        <i class="fas fa-id-card"></i> Datos Personales
+                    </button>
+                    <button type="button" class="tab-btn" onclick="mostrarTab(event, 'datos-medicos')">
+                        <i class="fas fa-notes-medical"></i> Datos Médicos
+                    </button>
+                    <button type="button" class="tab-btn" onclick="mostrarTab(event, 'plan-tratamiento')">
+                        <i class="fas fa-clipboard-list"></i> Plan de Tratamiento
+                    </button>
+                </div>
+
+                <form id="formPaciente" onsubmit="event.preventDefault(); guardarPaciente();">
+
+                    <!-- ============================================= -->
+                    <!-- TAB 1: DATOS PERSONALES -->
+                    <!-- ============================================= -->
+                    <div id="datos-personales" class="tab-content active">
+
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon blue"><i class="fas fa-hospital"></i></div>
+                                <div>
+                                    <h3>Institución de Adscripción</h3>
+                                    <p>Datos de la institución y referencia</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-3">
+                                <div class="form-group">
+                                    <label for="institucion">Institución de Adscripción *</label>
+                                    <input type="text" id="institucion" name="institucion" placeholder="Ej: Ministerio de Salud" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="establecimiento">Nombre del Establecimiento *</label>
+                                    <input type="text" id="establecimiento" name="establecimiento" placeholder="Ej: Hospital Central" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaReferencia">Fecha de la Referencia *</label>
+                                    <input type="date" id="fechaReferencia" name="fechaReferencia" required>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon green"><i class="fas fa-id-card"></i></div>
+                                <div>
+                                    <h3>Datos del Paciente</h3>
+                                    <p>Información personal y de identificación</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-3">
+                                <div class="form-group">
+                                    <label for="fecha">Fecha *</label>
+                                    <input type="date" id="fecha" name="fecha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numeroHistoria">Número de Historia *</label>
+                                    <input type="number" id="numeroHistoria" name="numeroHistoria" placeholder="Ej: 1001" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombres">Nombres *</label>
+                                    <input type="text" id="nombres" name="nombres" placeholder="Ej: Juan Carlos" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellidos">Apellidos *</label>
+                                    <input type="text" id="apellidos" name="apellidos" placeholder="Ej: Pérez Rodríguez" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipo de Documento *</label>
+                                    <div class="checkbox-group">
+                                        <label class="check-item"><input type="radio" name="tipoDocumento" value="V" required><span>V</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoDocumento" value="E"><span>E</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoDocumento" value="J"><span>J</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cedula">Documento de Identificación (Cédula) *</label>
+                                    <input type="text" id="cedula" name="cedula" placeholder="Ej: 12345678"
+                                           inputmode="numeric" pattern="[0-9]+" title="Solo se permiten números" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaNacimiento">Fecha de Nacimiento *</label>
+                                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" required onchange="calcularEdad()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="edad">Edad *</label>
+                                    <input type="number" id="edad" name="edad" placeholder="Se calcula automáticamente" min="0" max="120" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sexo *</label>
+                                    <div class="radio-group">
+                                        <label class="radio-item"><input type="radio" name="sexo" value="Masculino" required><span>Masculino</span></label>
+                                        <label class="radio-item"><input type="radio" name="sexo" value="Femenino"><span>Femenino</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="raza">Raza *</label>
+                                    <select id="raza" name="raza" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="Caucásica">Caucásica</option>
+                                        <option value="Negroide">Negroide</option>
+                                        <option value="Mestiza">Mestiza</option>
+                                        <option value="Asiática">Asiática</option>
+                                        <option value="Etnia">Etnia</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon orange"><i class="fas fa-map-marked-alt"></i></div>
+                                <div>
+                                    <h3>Lugar de Nacimiento y Procedencia</h3>
+                                    <p>Ubicación geográfica del paciente</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-2">
+                                <div class="sub-column">
+                                    <h4 class="sub-title"><i class="fas fa-baby"></i> Lugar de Nacimiento</h4>
+                                    <div class="form-group"><label for="nacEstado">Estado</label><input type="text" id="nacEstado" name="nacEstado" placeholder="Ej: Miranda"></div>
+                                    <div class="form-group"><label for="nacMunicipio">Municipio</label><input type="text" id="nacMunicipio" name="nacMunicipio" placeholder="Ej: Sucre"></div>
+                                    <div class="form-group"><label for="nacParroquia">Parroquia</label><input type="text" id="nacParroquia" name="nacParroquia" placeholder="Ej: Petare"></div>
+                                    <div class="form-group"><label for="nacPais">País</label><input type="text" id="nacPais" name="nacPais" placeholder="Ej: Venezuela"></div>
+                                </div>
+
+                                <div class="sub-column">
+                                    <h4 class="sub-title"><i class="fas fa-map-pin"></i> Lugar de Procedencia</h4>
+                                    <div class="form-group"><label for="proEstado">Estado</label><input type="text" id="proEstado" name="proEstado" placeholder="Ej: Distrito Capital"></div>
+                                    <div class="form-group"><label for="proMunicipio">Municipio</label><input type="text" id="proMunicipio" name="proMunicipio" placeholder="Ej: Libertador"></div>
+                                    <div class="form-group"><label for="proParroquia">Parroquia</label><input type="text" id="proParroquia" name="proParroquia" placeholder="Ej: Catedral"></div>
+                                    <div class="form-group"><label for="proPais">País</label><input type="text" id="proPais" name="proPais" placeholder="Ej: Venezuela"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="direccionHabitacion">Dirección de Habitación</label>
+                                    <input type="text" id="direccionHabitacion" name="direccionHabitacion" placeholder="Ej: Av. Principal, Casa 12">
+                                </div>
+                                <div class="form-group">
+                                    <label for="direccionContacto">Dirección de Contacto</label>
+                                    <input type="text" id="direccionContacto" name="direccionContacto" placeholder="Ej: Av. Secundaria, Apto 3B">
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon purple"><i class="fas fa-briefcase"></i></div>
+                                <div>
+                                    <h3>Ocupación y Profesión</h3>
+                                    <p>Datos de actividad laboral</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-2">
+                                <div class="form-group"><label for="ocupacion">Ocupación</label><input type="text" id="ocupacion" name="ocupacion" placeholder="Ej: Comerciante"></div>
+                                <div class="form-group"><label for="aniosOcupacion">Años de Ocupación</label><input type="text" id="aniosOcupacion" name="aniosOcupacion" placeholder="Ej: 5 años"></div>
+                                <div class="form-group"><label for="profesion">Profesión</label><input type="text" id="profesion" name="profesion" placeholder="Ej: Ingeniero"></div>
+                                <div class="form-group"><label for="aniosEjercidos">Años Ejercidos</label><input type="number" id="aniosEjercidos" name="aniosEjercidos" placeholder="Ej: 10" min="0" max="80"></div>
+                            </div>
+                        </section>
+
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon teal"><i class="fas fa-address-book"></i></div>
+                                <div>
+                                    <h3>Contacto</h3>
+                                    <p>Información de comunicación del paciente</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-2">
+                                <div class="form-group">
+                                    <label for="telefonoHabitacion">Teléfono de Habitación</label>
+                                    <input type="tel" id="telefonoHabitacion" name="telefonoHabitacion" placeholder="Ej: 02121234567" inputmode="numeric">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="tel" id="telefono" name="telefono" placeholder="Ej: 04141234567" inputmode="numeric">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefono2">Segundo Teléfono</label>
+                                    <input type="tel" id="telefono2" name="telefono2" placeholder="Ej: 04241234567" inputmode="numeric">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Correo Electrónico</label>
+                                    <input type="email" id="email" name="email" placeholder="Ej: correo@ejemplo.com">
+                                </div>
+                                
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <!-- ============================================= -->
+                    <!-- TAB 2: DATOS MÉDICOS -->
+                    <!-- ============================================= -->
+                    <div id="datos-medicos" class="tab-content">
+
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon red"><i class="fas fa-notes-medical"></i></div>
+                                <div>
+                                    <h3>Consulta y Diagnóstico</h3>
+                                    <p>Fechas y diagnóstico inicial del paciente</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-3">
+                                <div class="form-group">
+                                    <label for="fechaPrimeraConsulta">Fecha de la Primera Consulta *</label>
+                                    <input type="date" id="fechaPrimeraConsulta" name="fechaPrimeraConsulta" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaPrimerDiagnostico">Fecha del Primer Diagnóstico *</label>
+                                    <input type="date" id="fechaPrimerDiagnostico" name="fechaPrimerDiagnostico" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaPrimerTratamiento">Fecha del Primer Tratamiento *</label>
+                                    <input type="date" id="fechaPrimerTratamiento" name="fechaPrimerTratamiento" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="diagnosticoInicio">Diagnóstico de Inicio *</label>
+                                    <textarea id="diagnosticoInicio" name="diagnosticoInicio" rows="3"
+                                              placeholder="Describa el diagnóstico inicial del paciente..." required></textarea>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <!-- ============================================= -->
+                    <!-- TAB 3: PLAN DE TRATAMIENTO -->
+                    <!-- ============================================= -->
+                    <div id="plan-tratamiento" class="tab-content">
+
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon purple"><i class="fas fa-clipboard-list"></i></div>
+                                <div>
+                                    <h3>Plan de Tratamiento</h3>
+                                    <p>Esquema y observaciones del tratamiento</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-2">
+                                <div class="form-group">
+                                    <label for="tipoTratamiento">Tipo de Tratamiento</label>
+                                    <select id="tipoTratamiento" name="tipoTratamiento">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="Quimioterapia">Quimioterapia</option>
+                                        <option value="Radioterapia">Radioterapia</option>
+                                        <option value="Cirugía">Cirugía</option>
+                                        <option value="Inmunoterapia">Inmunoterapia</option>
+                                        <option value="Hormonoterapia">Hormonoterapia</option>
+                                        <option value="Cuidados Paliativos">Cuidados Paliativos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ciclos">Ciclos / Sesiones</label>
+                                    <input type="number" id="ciclos" name="ciclos" min="0" placeholder="Ej: 6">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="descripcionTratamiento">Descripción del Tratamiento</label>
+                                    <textarea id="descripcionTratamiento" name="descripcionTratamiento" rows="3"
+                                              placeholder="Detalle del esquema, medicamentos, dosis..."></textarea>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="observacionesTratamiento">Observaciones</label>
+                                    <textarea id="observacionesTratamiento" name="observacionesTratamiento" rows="3"
+                                              placeholder="Notas adicionales del plan..."></textarea>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="action-btn cancel-btn" onclick="limpiarFormulario()">
+                            <i class="fas fa-eraser"></i> Limpiar
+                        </button>
+                        <button type="submit" class="action-btn save-btn">
+                            <i class="fas fa-save"></i> Guardar Paciente
+                        </button>
+                    </div>
+
+                </form>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function cerrarSesion() {
+            if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                window.location.href = "login.html";
+            }
+        }
+
+        /* ===== SUBMENÚ ===== */
+        function toggleSubmenu(e) {
+            e.preventDefault();
+            const li = e.currentTarget.parentElement;
+            li.classList.toggle("open");
+        }
+
+        /* ===== PESTAÑAS ===== */
+        function mostrarTab(e, id) {
+            if (e) e.preventDefault();
+
+            document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+
+            document.getElementById(id).classList.add("active");
+
+            const boton = document.querySelector(`.tab-btn[onclick*="${id}"]`);
+            if (boton) boton.classList.add("active");
+        }
+
+        /* ===== FECHA DE HOY ===== */
+        document.addEventListener("DOMContentLoaded", function () {
+            const hoy = new Date().toISOString().split("T")[0];
+            const campoFecha = document.getElementById("fecha");
+            if (campoFecha) campoFecha.value = hoy;
+        });
+
+        /* ===== CALCULAR EDAD ===== */
+        function calcularEdad() {
+            const fechaNac = document.getElementById("fechaNacimiento").value;
+            if (!fechaNac) return;
+
+            const nacimiento = new Date(fechaNac);
+            const hoy = new Date();
+
+            let edad = hoy.getFullYear() - nacimiento.getFullYear();
+            const mes = hoy.getMonth() - nacimiento.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
+
+            document.getElementById("edad").value = edad;
+        }
+
+        /* ===== GUARDAR PACIENTE ===== */
+        function guardarPaciente() {
+            const form = document.getElementById("formPaciente");
+            const datos = {};
+
+            form.querySelectorAll("input, select, textarea").forEach(campo => {
+                if (campo.type === "radio") {
+                    if (campo.checked) datos[campo.name] = campo.value;
+                } else if (campo.type === "checkbox") {
+                    datos[campo.name] = campo.checked;
+                } else {
+                    datos[campo.name] = campo.value;
+                }
+            });
+
+            console.log("📋 Datos del paciente:", datos);
+
+            /* ==========================================================
+               🔌 AQUÍ ENLAZARÁS TU BD:
+               fetch("http://localhost:3000/api/pacientes", {
+                   method: "POST",
+                   headers: { "Content-Type": "application/json" },
+                   body: JSON.stringify(datos)
+               })
+               ========================================================== */
+
+            alert(`✅ Paciente "${datos.nombres} ${datos.apellidos}" registrado correctamente.`);
+        }
+
+        /* ===== LIMPIAR ===== */
+        function limpiarFormulario() {
+            if (confirm("¿Deseas limpiar todos los campos del formulario?")) {
+                document.getElementById("formPaciente").reset();
+                const hoy = new Date().toISOString().split("T")[0];
+                const campoFecha = document.getElementById("fecha");
+                if (campoFecha) campoFecha.value = hoy;
+            }
+        }
+    </script>
+
+</body>
+</html>
