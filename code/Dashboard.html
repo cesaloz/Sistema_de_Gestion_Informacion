@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONCOPATH - Registro de Pacientes</title>
+    <title>ONCOPATH - Inicio</title>
     <link rel="stylesheet" href="css/Dash.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -33,7 +33,7 @@
 
         <div class="main-content">
 
-            <!-- ===== BARRA LATERAL CON SUBMENÚ ===== -->
+            <!-- ===== BARRA LATERAL ===== -->
             <aside class="sidebar">
                 <nav>
                     <ul>
@@ -49,26 +49,31 @@
                             </a>
                         </li>
 
-                        <!-- ===== NUEVOS PACIENTES CON SUBMENÚ ===== -->
+                        <!-- ===== LLENADO DE HISTORIAL (SUBMENÚ) ===== -->
                         <li class="has-submenu">
-                            <a href="HCHemato.html" class="menu-toggle" class="active" onclick="toggleSubmenu(event)">
-                                <i class="fas fa-user-plus"></i> Llenado de Historial
+                            <a href="HCHemato.html" class="menu-toggle" onclick="toggleSubmenu(event)">
+                                <i class="fas fa-edit"></i> Llenado de Historial
                                 <i class="fas fa-chevron-down arrow"></i>
                             </a>
                             <ul class="submenu">
                                 <li>
-                                    <a href="HCHemato.html#datos-personales">
-                                        <i class="fas fa-id-card"></i> HISTORIA CLÍNICA HEMATO
+                                    <a href="historias/Registro_Paciente.html">
+                                        <i class="fas fa-user-plus"></i> REGISTRO DE PACIENTES
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="HCCirugia.html">
-                                        <i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGIA
+                                    <a href="historias/HCHemato.html">
+                                        <i class="fas fa-microscope"></i> HISTORIA CLÍNICA HEMATO
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="HCMamografia.html">
-                                        <i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFIA
+                                    <a href="historias/HCCirugia.html">
+                                        <i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGÍA
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="historias/HCMamografia.html">
+                                        <i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFÍA
                                     </a>
                                 </li>
                             </ul>
@@ -112,7 +117,6 @@
                     <h2>Resumen de Pacientes</h2>
                 </div>
 
-                <!-- ===== TARJETAS DE ESTADÍSTICAS ===== -->
                 <section class="stats-cards">
                     <div class="card">
                         <div class="card-icon blue"><i class="fas fa-users"></i></div>
@@ -147,7 +151,6 @@
                     </div>
                 </section>
 
-                <!-- ===== TABLA ===== -->
                 <section class="table-container">
                     <div class="table-header">
                         <h3>Últimos Pacientes Registrados</h3>
@@ -235,16 +238,13 @@
         </div>
     </div>
 
-    <!-- ===== SCRIPTS ===== -->
     <script>
-        /* ===== CERRAR SESIÓN ===== */
         function cerrarSesion() {
             if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
                 window.location.href = "login.html";
             }
         }
 
-        /* ===== SUBMENÚ DESPLEGABLE ===== */
         function toggleSubmenu(e) {
             e.preventDefault();
             const li = e.currentTarget.parentElement;

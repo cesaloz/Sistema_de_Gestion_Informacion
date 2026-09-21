@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONCOPATH - Historia Clínica Hemato</title>
+    <link rel="stylesheet" href="css/HCHemato.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <i class="fas fa-hospital-user logo-icon"></i>
+                <h1>Oncopath</h1>
+            </div>
+
+            <div class="topbar-right">
+                <div class="user-info">
+                    <i class="fas fa-user-circle user-avatar"></i>
+                    <span class="user-name">Dra. Ana López</span>
+                </div>
+                <button class="logout-btn" onclick="cerrarSesion()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+
+            <!-- ===== BARRA LATERAL ===== -->
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="../Dashboard.html"><i class="fas fa-chart-pie"></i> Inicio</a></li>
+                        <li><a href="../pacientes.html"><i class="fas fa-users"></i> Pacientes</a></li>
+
+                        <li class="has-submenu open">
+                            <a href="../HCHemato.html" class="active menu-toggle" onclick="toggleSubmenu(event)">
+                                <i class="fas fa-edit"></i> Llenado de Historial
+                                <i class="fas fa-chevron-down arrow"></i>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="Registro_Paciente.html"><i class="fas fa-user-plus"></i> REGISTRO DE PACIENTES</a></li>
+                                <li><a href="HCHemato.html" class="active1"><i class="fas fa-microscope"></i> HISTORIA CLÍNICA HEMATO</a></li>
+                                <li><a href="HCCirugia.html"><i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGÍA</a></li>
+                                <li><a href="HCMamografia.html"><i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFÍA</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="../diagnostico.html"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
+                        <li><a href="../consulta.html"><i class="fas fa-comments"></i> Consulta</a></li>
+                        <li><a href="../cirugia.html"><i class="fas fa-syringe"></i> Cirugía</a></li>
+                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- ===== CONTENIDO ===== -->
+            <main class="content">
+
+                <div class="content-header">
+                    <div>
+                        <h2>REGISTRO DE HISTORIA CLÍNICA DE CIRUGÍA - ONCOLOGIA</h2>
+                        <p class="subtitle">Complete todos los datos para registrar la historia quirúrgica del paciente</p>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="window.location.href='pacientes.html'">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                </div>
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon red"><i class="fas fa-notes-medical"></i></div>
+                                <div>
+                                    <h3>Consulta y Diagnóstico</h3>
+                                    <p>Fechas y diagnóstico inicial del paciente</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-3">
+                                <div class="form-group">
+                                    <label for="fechaPrimeraConsulta">Fecha de la Primera Consulta</label>
+                                    <input type="date" id="fechaPrimeraConsulta" name="fechaPrimeraConsulta">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaPrimerDiagnostico">Fecha del Primer Diagnóstico</label>
+                                    <input type="date" id="fechaPrimerDiagnostico" name="fechaPrimerDiagnostico">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaPrimerTratamiento">Fecha del Primer Tratamiento</label>
+                                    <input type="date" id="fechaPrimerTratamiento" name="fechaPrimerTratamiento">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="diagnosticoInicio">Diagnóstico de Inicio</label>
+                                    <textarea id="diagnosticoInicio" name="diagnosticoInicio" rows="3"
+                                              placeholder="Describa el diagnóstico inicial del paciente..."></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <label>Tumor Primario</label>
+                                    <div class="checkbox-group">
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V" required><span>UNICO</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="E"><span>MULTIPLE</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="J"><span>DUDOSO</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="J"><span>NO ESPECIFICADO</span></label>
+                                    </div>
+                                </div>
+                        </section>
+
+                <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon orange"><i class="fas fa-map-marked-alt"></i></div>
+                                <div>
+                                    <h3>ESTADIAJE</h3>
+                                    <p>Evaluación médica que determina el tamaño y la propagación</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-2">
+                                <div class="sub-column">
+                                    <div class="form-group">
+                                    <label>Estadio*</label>
+                                    <div class="checkbox-group">
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V" required><span>T</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="E"><span>N</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="J"><span>M</span></label>
+                                    </div>
+                                </div>
+                                    <div class="form-group full-width">
+                                    <h4 class="sub-title"><i class="fas fa-map-pin"></i> Localizacion Primaria (topologia)</h4>
+                                    <textarea id="diagnosticoInicio" name="diagnosticoInicio" rows="3"
+                                              placeholder="Describa la localizacion..."></textarea>
+                                    </div>
+                                    <div class="form-group full-width">
+                                    <h4 class="sub-title"><i class="fas fa-map-pin"></i> Tipo de Histologia</h4>
+                                    <textarea id="diagnosticoInicio" name="diagnosticoInicio" rows="3"
+                                              placeholder="Describa el de histologia..."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="sub-column">
+                                    <h4 class="sub-title"><i class="fas fa-map-pin"></i> Estadiaje Patológico de Inicio</h4>
+                                    <div class="form-group">
+                                    <label>Extension clinica de los tumores solidos*</label>
+                                    <div class="checkbox-group">
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V" required><span>CARNICIOMA</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="E" ><span>LOCALIZADA</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="J" ><span>EXTENSION DIRECTA</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V"><span>LINFATICOS REGIONALES COMPROMETIDOS</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V"><span>EXTENSION DIRECTA Y LINFATICOS REGIONALES COMPROMETIDOS</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V"><span>METASTASIS A DISTANCIA</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V"><span>NO DUPLICABLE</span></label>
+                                        <label class="check-item"><input type="radio" name="tipoTumor" value="V"><span>SIN ESPECIFICACIONES</span></label>
+                                    </div>
+                                </div>
+                                    
+
+
+                                </div>
+                        </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function cerrarSesion() {
+            if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                window.location.href = "login.html";
+            }
+        }
+
+        function toggleSubmenu(e) {
+            e.preventDefault();
+            const li = e.currentTarget.parentElement;
+            li.classList.toggle("open");
+        }
+
+        function mostrarTab(e, id) {
+            if (e) e.preventDefault();
+
+            document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+
+            document.getElementById(id).classList.add("active");
+
+            const boton = document.querySelector(`.tab-btn[onclick*="${id}"]`);
+            if (boton) boton.classList.add("active");
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const hoy = new Date().toISOString().split("T")[0];
+            const campoFecha = document.getElementById("fecha");
+            if (campoFecha) campoFecha.value = hoy;
+        });
+
+        function calcularEdad() {
+            const fechaNac = document.getElementById("fechaNacimiento").value;
+            if (!fechaNac) return;
+
+            const nacimiento = new Date(fechaNac);
+            const hoy = new Date();
+
+            let edad = hoy.getFullYear() - nacimiento.getFullYear();
+            const mes = hoy.getMonth() - nacimiento.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
+
+            document.getElementById("edad").value = edad;
+        }
+
+        function guardarPaciente() {
+            const form = document.getElementById("formPaciente");
+            const datos = {};
+
+            form.querySelectorAll("input, select, textarea").forEach(campo => {
+                if (campo.type === "radio") {
+                    if (campo.checked) datos[campo.name] = campo.value;
+                } else if (campo.type === "checkbox") {
+                    datos[campo.name] = campo.checked;
+                } else {
+                    datos[campo.name] = campo.value;
+                }
+            });
+
+            console.log("📋 Datos del paciente (Hemato):", datos);
+
+            /* ==========================================================
+               🔌 AQUÍ ENLAZARÁS TU BD
+               ========================================================== */
+
+            alert(`✅ Paciente "${datos.nombres} ${datos.apellidos}" registrado correctamente en Historia Hemato.`);
+        }
+
+        function limpiarFormulario() {
+            if (confirm("¿Deseas limpiar todos los campos del formulario?")) {
+                document.getElementById("formPaciente").reset();
+                const hoy = new Date().toISOString().split("T")[0];
+                const campoFecha = document.getElementById("fecha");
+                if (campoFecha) campoFecha.value = hoy;
+            }
+        }
+    </script>
+
+</body>
+</html>

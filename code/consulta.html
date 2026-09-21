@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONCOPATH - Consulta</title>
+    <link rel="stylesheet" href="css/Proximamente.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <i class="fas fa-hospital-user logo-icon"></i>
+                <h1>Oncopath</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="user-info">
+                    <i class="fas fa-user-circle user-avatar"></i>
+                    <span class="user-name">Dra. Ana López</span>
+                </div>
+                <button class="logout-btn" onclick="cerrarSesion()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="Dashboard.html"><i class="fas fa-chart-pie"></i> Inicio</a></li>
+                        <li><a href="pacientes.html"><i class="fas fa-users"></i> Pacientes</a></li>
+
+                        <li class="has-submenu">
+                            <a href="HCHemato.html" class="menu-toggle" onclick="toggleSubmenu(event)">
+                                <i class="fas fa-edit"></i> Llenado de Historial
+                                <i class="fas fa-chevron-down arrow"></i>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="historias/Registro_Paciente.html"><i class="fas fa-user-plus"></i> REGISTRO DE PACIENTES</a></li>
+                                <li><a href="historias/HCHemato.html"><i class="fas fa-microscope""></i> HISTORIA CLÍNICA HEMATO</a></li>
+                                <li><a href="historias/HCCirugia.html"><i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGÍA</a></li>
+                                <li><a href="historias/HCMamografia.html"><i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFÍA</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="diagnostico.html"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
+                        <li><a href="consulta.html" class="active"><i class="fas fa-comments"></i> Consulta</a></li>
+                        <li><a href="cirugia.html"><i class="fas fa-syringe"></i> Cirugía</a></li>
+                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="content">
+
+                <div class="content-header">
+                    <div>
+                        <h2>Consulta</h2>
+                        <p class="subtitle">Módulo en desarrollo</p>
+                    </div>
+                </div>
+
+                <section class="coming-soon-card">
+                    <h3>Módulo de Consulta</h3>
+                    <p>
+                        Estamos trabajando en esta sección. Aquí podrás agendar,
+                        gestionar y dar seguimiento a las consultas médicas de
+                        los pacientes del sistema.
+                    </p>
+                    <span class="coming-soon-badge">
+                        <i class="fas fa-hourglass-half"></i> Próximamente
+                    </span>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function cerrarSesion() {
+            if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                window.location.href = "login.html";
+            }
+        }
+
+        function toggleSubmenu(e) {
+            e.preventDefault();
+            e.currentTarget.parentElement.classList.toggle("open");
+        }
+    </script>
+
+</body>
+</html>
