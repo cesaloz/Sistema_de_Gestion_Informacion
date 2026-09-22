@@ -1,23 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONCOPATH - Usuario</title>
-    <link rel="stylesheet" href="css/Login.css">
+    <title>ONCOPATH - Iniciar Sesión</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
-
-</head>
 <body>
+
     <div class="box">
-    <i class="fas fa-user-circle user-avatar"></i>
-    <h3>LOGIN</h3>
-    <input type="text" placeholder="Usuario">
-    <input type="password" placeholder="Contraseña">
-    <button onclick="window.location.href='dashboard.html'">iniciar</button>
+
+        <!-- Encabezado -->
+        <div class="login-header">
+            <h1>ONCOPATH</h1>
+            <p>Sistema de Registro de Pacientes</p>
+        </div>
+
+        <form id="formLogin" onsubmit="validarLogin(event)">
+
+    <input type="text" id="usuario" name="usuario" placeholder="Usuario" required>
+    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+    <button type="submit">Iniciar Sesión</button>
+    <div id="mensajeLogin" style="display:none; margin-top: 10px;"></div>
+
+            </form>
 
     </div>
+
+    <div>
+       <footer class="login-footer-fixed">
+    <img src="css/IMG/image1.png" alt="Logo Oncopath">
+    <p>Derechos de autor © 2026 Servicio Oncológico del Estado Lara</p>
+</footer>
+    </div>
+
+                    <script src="/JS/login.js"></script>
+
 </body>
 </html>

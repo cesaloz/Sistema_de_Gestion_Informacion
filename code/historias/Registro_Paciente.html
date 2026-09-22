@@ -32,7 +32,6 @@
 
         <div class="main-content">
 
-            <!-- ===== BARRA LATERAL ===== -->
             <aside class="sidebar">
                 <nav>
                     <ul>
@@ -60,7 +59,6 @@
                 </nav>
             </aside>
 
-            <!-- ===== CONTENIDO ===== -->
             <main class="content">
 
                 <div class="content-header">
@@ -77,17 +75,11 @@
                     <button type="button" class="tab-btn active" onclick="mostrarTab(event, 'datos-personales')">
                         <i class="fas fa-id-card"></i> Datos Personales
                     </button>
-                    <button type="button" class="tab-btn" onclick="mostrarTab(event, 'datos-medicos')">
-                        <i class="fas fa-notes-medical"></i> Datos Médicos
-                    </button>
-                    <button type="button" class="tab-btn" onclick="mostrarTab(event, 'plan-tratamiento')">
-                        <i class="fas fa-clipboard-list"></i> Plan de Tratamiento
-                    </button>
                 </div>
 
                 <form id="formPaciente" onsubmit="event.preventDefault();">
 
-                    <!-- ===== TAB 1: DATOS PERSONALES ===== -->
+<!--TAB 1-->
                     <div id="datos-personales" class="tab-content active">
 
                         <section class="form-section">
@@ -267,10 +259,6 @@
                         </section>
 
                     </div>
-
-                    <!-- ===== TAB 2: DATOS MÉDICOS (sin required) ===== -->
-                    
-
                     <!-- ===== TAB 3: PLAN DE TRATAMIENTO ===== -->
                     <div id="plan-tratamiento" class="tab-content">
 
@@ -329,162 +317,7 @@
             </main>
         </div>
     </div>
-
-    <script>
-        function cerrarSesion() {
-            if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
-                window.location.href = "login.html";
-            }
-        }
-
-        function toggleSubmenu(e) {
-            e.preventDefault();
-            e.currentTarget.parentElement.classList.toggle("open");
-        }
-
-        function mostrarTab(e, id) {
-            if (e) e.preventDefault();
-
-            document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-
-            const tab = document.getElementById(id);
-            if (tab) tab.classList.add("active");
-
-            const boton = document.querySelector(`.tab-btn[onclick*="${id}"]`);
-            if (boton) boton.classList.add("active");
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const hoy = new Date().toISOString().split("T")[0];
-            const campoFecha = document.getElementById("fecha");
-            if (campoFecha) campoFecha.value = hoy;
-        });
-
-        function calcularEdad() {
-            const fechaNac = document.getElementById("fechaNacimiento").value;
-            if (!fechaNac) return;
-
-            const nacimiento = new Date(fechaNac);
-            const hoy = new Date();
-
-            let edad = hoy.getFullYear() - nacimiento.getFullYear();
-            const mes = hoy.getMonth() - nacimiento.getMonth();
-            if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
-
-            document.getElementById("edad").value = edad;
-        }
-
-        /* ==========================================================
-           GUARDAR PACIENTE — versión corregida
-           ========================================================== */
-        function guardarPaciente() {
-            const form = document.getElementById("formPaciente");
-
-            /* ===== VALIDACIÓN MANUAL DE CAMPOS OBLIGATORIOS ===== */
-            const obligatorios = [
-                { id: "institucion",     nombre: "Institución de Adscripción" },
-                { id: "establecimiento", nombre: "Nombre del Establecimiento" },
-                { id: "fechaReferencia", nombre: "Fecha de la Referencia" },
-                { id: "fecha",           nombre: "Fecha del Registro" },
-                { id: "numeroHistoria",  nombre: "Número de Historia" },
-                { id: "nombres",         nombre: "Nombres" },
-                { id: "apellidos",       nombre: "Apellidos" },
-                { id: "cedula",          nombre: "Cédula" },
-                { id: "fechaNacimiento", nombre: "Fecha de Nacimiento" },
-                { id: "edad",            nombre: "Edad" },
-                { id: "raza",            nombre: "Raza" }
-            ];
-
-            for (const campo of obligatorios) {
-                const el = document.getElementById(campo.id);
-                if (!el) continue;
-
-                if (!el.value || el.value.trim() === "") {
-                    mostrarTab(null, "datos-personales");
-                    el.style.borderColor = "#dc2626";
-                    el.style.boxShadow = "0 0 0 3px rgba(220, 38, 38, 0.15)";
-                    el.focus();
-                    el.scrollIntoView({ behavior: "smooth", block: "center" });
-
-                    alert(`⚠️ Falta completar: ${campo.nombre}`);
-                    return;
-                }
-            }
-
-            // Validar Tipo de Documento (radio)
-            const tipoDoc = form.querySelector('input[name="tipoDocumento"]:checked');
-            if (!tipoDoc) {
-                mostrarTab(null, "datos-personales");
-                alert("⚠️ Debe seleccionar el Tipo de Documento (V / E / J).");
-                return;
-            }
-
-            // Validar Sexo (radio)
-            const sexo = form.querySelector('input[name="sexo"]:checked');
-            if (!sexo) {
-                mostrarTab(null, "datos-personales");
-                alert("⚠️ Debe seleccionar el Sexo del paciente.");
-                return;
-            }
-
-            /* ===== RECOLECTAR TODOS LOS DATOS ===== */
-            const datos = {};
-
-            form.querySelectorAll("input, select, textarea").forEach(campo => {
-                if (!campo.name) return;
-
-                if (campo.type === "radio") {
-                    if (campo.checked) datos[campo.name] = campo.value;
-                } else if (campo.type === "checkbox") {
-                    datos[campo.name] = campo.checked;
-                } else {
-                    datos[campo.name] = campo.value;
-                }
-            });
-
-            console.log("📋 Datos capturados del formulario:", datos);
-
-            /* ==========================================================
-               🔌 AQUÍ ENLAZARÁS TU BD:
-
-               fetch("http://localhost:3000/api/pacientes/hemato", {
-                   method: "POST",
-                   headers: { "Content-Type": "application/json" },
-                   body: JSON.stringify(datos)
-               })
-               .then(res => res.json())
-               .then(data => {
-                   alert("✅ Paciente guardado en la BD");
-                   limpiarFormulario();
-               })
-               .catch(err => {
-                   console.error(err);
-                   alert("❌ Error al guardar en la BD");
-               });
-               ========================================================== */
-
-            alert(`✅ Paciente "${datos.nombres} ${datos.apellidos}" registrado correctamente en Historia Hemato.`);
-        }
-
-        function limpiarFormulario() {
-            if (confirm("¿Deseas limpiar todos los campos del formulario?")) {
-                document.getElementById("formPaciente").reset();
-
-                // Quitar los bordes rojos de validación
-                document.querySelectorAll("#formPaciente input, #formPaciente select, #formPaciente textarea").forEach(el => {
-                    el.style.borderColor = "";
-                    el.style.boxShadow = "";
-                });
-
-                const hoy = new Date().toISOString().split("T")[0];
-                const campoFecha = document.getElementById("fecha");
-                if (campoFecha) campoFecha.value = hoy;
-
-                mostrarTab(null, "datos-personales");
-            }
-        }
-    </script>
-
+                    <script src="../JS/Sesion.JS"></script>
+                    <script src="../JS/regis.js"></script>
 </body>
 </html>
