@@ -40,3 +40,80 @@ button {
     font-size: 5.9rem;
     color: #633ab6;
 }
+
+
+
+/* ===== MENSAJES DEL LOGIN ===== */
+.login-message {
+    margin-top: 12px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeInMensaje 0.3s ease;
+}
+
+.login-message.success {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #86efac;
+}
+
+.login-message.error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+@keyframes fadeInMensaje {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== MEMBRETE FIJO AL FONDO ===== */
+.login-footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;   /* 👈 ESTA es la clave: apila en vertical */
+    align-items: center;      /* 👈 centra horizontalmente */
+    justify-content: center;
+    gap: 0.4rem;              /* 👈 espacio entre imagen y texto */
+    border-top: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+    z-index: 10;
+    text-align: center;
+}
+
+.login-footer-fixed img,
+.footer-logo {
+    width: auto;
+    height: 55px;
+    max-width: 100000px;
+    object-fit: contain;
+    margin-bottom: 0.2rem;
+}
+
+.login-footer-fixed p {
+    margin: 0.1rem 0;
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.login-footer-fixed strong {
+    color: #098cd7;
+    font-weight: 700;
+}

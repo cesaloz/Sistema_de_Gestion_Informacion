@@ -12,7 +12,6 @@
 
     <div class="dashboard-container">
 
-        <!-- ===== BARRA SUPERIOR ===== -->
         <header class="topbar">
             <div class="topbar-left">
                 <i class="fas fa-hospital-user logo-icon"></i>
@@ -33,7 +32,6 @@
 
         <div class="main-content">
 
-            <!-- ===== BARRA LATERAL ===== -->
             <aside class="sidebar">
                 <nav>
                     <ul>
@@ -49,7 +47,6 @@
                             </a>
                         </li>
 
-                        <!-- ===== LLENADO DE HISTORIAL (SUBMENÚ) ===== -->
                         <li class="has-submenu">
                             <a href="HCHemato.html" class="menu-toggle" onclick="toggleSubmenu(event)">
                                 <i class="fas fa-edit"></i> Llenado de Historial
@@ -106,7 +103,6 @@
                 </nav>
             </aside>
 
-            <!-- ===== CONTENIDO ===== -->
             <main class="content">
 
                 <div class="content-header">
@@ -238,19 +234,7 @@
         </div>
     </div>
 
-    <script>
-        function cerrarSesion() {
-            if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
-                window.location.href = "login.html";
-            }
-        }
-
-        function toggleSubmenu(e) {
-            e.preventDefault();
-            const li = e.currentTarget.parentElement;
-            li.classList.toggle("open");
-        }
-    </script>
+    <script src="../JS/Sesion.JS"></script>
 
 </body>
 </html>

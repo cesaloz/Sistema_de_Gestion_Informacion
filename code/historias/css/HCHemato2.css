@@ -159,7 +159,6 @@ body {
     color: var(--white);
 }
 
-/* Submenú */
 .sidebar nav ul li.has-submenu > a {
     display: flex;
     align-items: center;
@@ -219,7 +218,6 @@ body {
     flex: 1;
     padding: 2rem;
     overflow-y: auto;
-    max-width: 1400px;
 }
 
 .content-header {
@@ -375,19 +373,17 @@ body {
     min-height: 80px;
 }
 
-/* ===== 9. RADIO INLINE (Píldoras horizontales) ===== */
+/* ===== 9. RADIO INLINE (Píldoras) ===== */
 .radio-inline {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    align-items: flex-start;
 }
 
 .radio-pill {
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.4rem;
+    gap: 0.45rem;
     padding: 0.5rem 0.9rem;
     background-color: #f8fafc;
     border: 1px solid var(--border-color);
@@ -398,32 +394,18 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
-    width: auto;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow: visible;      /* 👈 permite que el texto se vea completo */
-}
-
-.radio-pill input[type="radio"] {
-    accent-color: var(--primary-color);
-    cursor: pointer;
-    margin: 0;
-    flex-shrink: 0;
-    width: 16px;            /* 👈 ancho fijo para el radio */
-    height: 16px;
-}
-
-.radio-pill span {
-    display: inline-block;
-    text-align: left;
-    line-height: 1.3;
-    white-space: nowrap;    /* 👈 evita saltos pero NO corta el texto */
-    overflow: visible;      /* 👈 el texto puede crecer libremente */
 }
 
 .radio-pill:hover {
     background-color: #eff6ff;
     border-color: var(--primary-color);
+}
+
+.radio-pill input {
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
 }
 
 .radio-pill input:checked + span {
@@ -432,67 +414,51 @@ body {
 }
 
 .radio-pill:has(input:checked) {
-    background-color: var(--primary-color);
+    background-color: #eff6ff;
     border-color: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(9, 140, 215, 0.25);
-    transform: translateY(-1px);
+    box-shadow: 0 0 0 2px rgba(9, 140, 215, 0.15);
 }
 
-.radio-pill:has(input:checked) span {
-    color: #ffffff;
-    font-weight: 700;
-}
-
-.radio-pill:has(input:checked) input[type="radio"] {
-    accent-color: #ffffff;
-}
-
-/* ===== 10. RADIO LIST (Lista vertical limpia) ===== */
+/* ===== 10. RADIO LIST (Lista vertical simple) ===== */
 .radio-list {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.35rem;
     width: 100%;
-    margin-top: 0.3rem;
 }
 
 .radio-line {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.55rem 0.75rem;
+    gap: 0.6rem;
+    padding: 0.5rem 0.7rem;
     border-radius: 6px;
     font-size: 0.88rem;
     font-weight: 500;
     color: var(--text-dark);
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: background 0.15s ease;
     user-select: none;
-    line-height: 1.4;
 }
 
 .radio-line:hover {
     background-color: #eff6ff;
 }
 
-.radio-line input[type="radio"] {
-    flex: 0 0 16px;
-    width: 16px;
-    height: 16px;
+.radio-line input {
     accent-color: var(--primary-color);
     cursor: pointer;
+    flex-shrink: 0;
     margin: 0;
+    width: 16px;
+    height: 16px;
 }
 
 .radio-line span {
-    flex: 1;
-    min-width: 0;
-    color: var(--text-dark);
-    word-break: break-word;
-    overflow-wrap: anywhere;
+    line-height: 1.4;
 }
 
-.radio-line input[type="radio"]:checked + span {
+.radio-line input:checked + span {
     color: var(--primary-color);
     font-weight: 700;
 }
@@ -609,186 +575,4 @@ body {
         justify-content: center;
         width: 100%;
     }
-}
-
-.tabs-nav {
-    display: flex;
-    gap: 0.5rem;
-    background-color: var(--white);
-    padding: 0.6rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.tab-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.7rem 1.3rem;
-    border: none;
-    background: transparent;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-light);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: inherit;
-}
-
-.tab-btn:hover {
-    background-color: #eff6ff;
-    color: var(--primary-color);
-}
-
-.tab-btn.active {
-    background-color: var(--primary-color);
-    color: #ffffff;
-    box-shadow: 0 4px 10px rgba(9, 140, 215, 0.25);
-}
-
-.tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@media (max-width: 600px) {
-    .tabs-nav {
-        flex-direction: column;
-    }
-    .tab-btn {
-        justify-content: center;
-        width: 100%;
-    }
-}
-
-/* ===== BARRA DE BÚSQUEDA DE PACIENTE ===== */
-.search-bar {
-    display: flex;
-    gap: 0.8rem;
-    margin-bottom: 0.5rem;
-}
-
-.search-input-wrapper {
-    position: relative;
-    flex: 1;
-}
-
-.search-input-wrapper i {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-light);
-    font-size: 0.95rem;
-    pointer-events: none;
-}
-
-.search-input-wrapper input {
-    width: 100%;
-    padding: 0.75rem 1rem 0.75rem 2.6rem;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    font-size: 0.95rem;
-    font-family: inherit;
-    color: var(--text-dark);
-    background: #ffffff;
-    outline: none;
-    transition: border 0.2s ease, box-shadow 0.2s ease;
-}
-
-.search-input-wrapper input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(9, 140, 215, 0.12);
-}
-
-/* ===== TABLA DE PACIENTES ===== */
-#tablaPacientes {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-}
-
-#tablaPacientes thead {
-    background-color: var(--bg-color);
-}
-
-#tablaPacientes th {
-    text-align: left;
-    padding: 0.9rem 1rem;
-    font-weight: 600;
-    color: var(--text-light);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-#tablaPacientes td {
-    padding: 0.9rem 1rem;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-dark);
-}
-
-#tablaPacientes tbody tr:hover {
-    background-color: #f8fafc;
-}
-
-#tablaPacientes tbody tr.selected {
-    background-color: #eff6ff;
-    border-left: 3px solid var(--primary-color);
-}
-
-/* ===== BOTÓN SELECCIONAR PACIENTE ===== */
-.btn-select-paciente {
-    background-color: var(--primary-color);
-    color: #ffffff;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    transition: background 0.2s ease;
-}
-
-.btn-select-paciente:hover {
-    background-color: var(--primary-hover);
-}
-
-/* ===== PACIENTE SELECCIONADO ===== */
-.paciente-seleccionado {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin-top: 1rem;
-    padding: 0.9rem 1.2rem;
-    background-color: #dcfce7;
-    border: 1px solid #86efac;
-    border-radius: 10px;
-    color: #166534;
-    font-size: 0.9rem;
-}
-
-.paciente-seleccionado i {
-    font-size: 1.3rem;
-    color: #16a34a;
-}
-
-.paciente-seleccionado strong {
-    font-weight: 700;
-    margin-right: 0.3rem;
 }
