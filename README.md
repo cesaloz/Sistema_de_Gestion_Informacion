@@ -4,3 +4,10 @@ colaboradores:
 Cesar Lozada R
 Roymer Matheus
 Ingeniero Manuel
+
+
+
+Usuario: 
+admin / 123
+doctor /doctor123
+enfermera / enf123
