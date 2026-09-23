@@ -1,227 +1,9 @@
 /* ===================================================================
    ONCOPATH - HCHemato.css
-   Estilos para la Historia Clínica Hemato
+   Estilos específicos de Historia Clínica Hemato
    =================================================================== */
 
-/* ===== 1. RESET Y VARIABLES ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
-
-:root {
-    --primary-color: #098cd7;
-    --primary-hover: #633ab6;
-    --bg-color: #f1f5f9;
-    --white: #ffffff;
-    --text-dark: #1e293b;
-    --text-light: #64748b;
-    --border-color: #e2e8f0;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --radius: 10px;
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-dark);
-    min-height: 100vh;
-}
-
-/* ===== 2. CONTENEDOR PRINCIPAL ===== */
-.dashboard-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.main-content {
-    display: flex;
-    flex: 1;
-}
-
-/* ===== 3. BARRA SUPERIOR ===== */
-.topbar {
-    background-color: #098cd7;
-    padding: 0 2rem;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.topbar-left {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.logo-icon {
-    font-size: 1.8rem;
-    color: #ffffff;
-}
-
-.topbar-left h1 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.4rem 0.8rem;
-    background-color: var(--bg-color);
-    border-radius: 50px;
-}
-
-.user-avatar {
-    font-size: 1.6rem;
-    color: var(--primary-color);
-}
-
-.user-name {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--text-dark);
-}
-
-.logout-btn {
-    background-color: #fee2ed;
-    color: #dc2635;
-    border: none;
-    padding: 0.55rem 1.1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s ease;
-}
-
-.logout-btn:hover {
-    background-color: #fecaca;
-}
-
-/* ===== 4. BARRA LATERAL ===== */
-.sidebar {
-    width: 240px;
-    background-color: var(--white);
-    padding: 1.5rem 1rem;
-    box-shadow: var(--shadow);
-}
-
-.sidebar nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
-
-.sidebar nav ul li a {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--text-light);
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.sidebar nav ul li a:hover {
-    background-color: #eff6ff;
-    color: var(--primary-color);
-}
-
-.sidebar nav ul li a.active {
-    background-color: var(--primary-color);
-    color: var(--white);
-}
-
-.sidebar nav ul li a.active1 {
-    background-color: #7961a8;
-    color: var(--white);
-}
-
-/* Submenú */
-.sidebar nav ul li.has-submenu > a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.sidebar nav ul li.has-submenu .arrow {
-    font-size: 0.7rem;
-    margin-left: auto;
-    transition: transform 0.25s ease;
-}
-
-.sidebar nav ul li.has-submenu.open .arrow {
-    transform: rotate(180deg);
-}
-
-.submenu {
-    list-style: none;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    margin-left: 0.6rem;
-    padding-left: 0.6rem;
-    border-left: 2px solid var(--border-color);
-}
-
-.sidebar nav ul li.has-submenu.open .submenu {
-    max-height: 300px;
-    margin-top: 0.3rem;
-}
-
-.submenu li a {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.55rem 0.8rem !important;
-    font-size: 0.83rem !important;
-    color: var(--text-light);
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.submenu li a:hover {
-    background-color: #eff6ff;
-    color: var(--primary-color);
-}
-
-.submenu li a i {
-    font-size: 0.8rem;
-    width: 14px;
-    text-align: center;
-}
-
-/* ===== 5. ÁREA DE CONTENIDO ===== */
-.content {
-    flex: 1;
-    padding: 2rem;
-    overflow-y: auto;
-    max-width: 1400px;
-}
-
+/* ===== HEADER DEL CONTENIDO ===== */
 .content-header {
     display: flex;
     justify-content: space-between;
@@ -243,6 +25,7 @@ body {
     margin-top: 0.2rem;
 }
 
+/* ===== BOTÓN SECUNDARIO ===== */
 .btn-secondary {
     background-color: #e2e8f0;
     color: #475569;
@@ -262,7 +45,7 @@ body {
     background-color: #cbd5e1;
 }
 
-/* ===== 6. SECCIONES DEL FORMULARIO ===== */
+/* ===== SECCIONES DEL FORMULARIO ===== */
 .form-section {
     background-color: var(--white);
     border-radius: var(--radius);
@@ -293,12 +76,12 @@ body {
     flex-shrink: 0;
 }
 
-.section-icon.blue { background-color: #3b82f6; }
-.section-icon.green { background-color: #10b981; }
+.section-icon.blue   { background-color: #3b82f6; }
+.section-icon.green  { background-color: #10b981; }
 .section-icon.orange { background-color: #f59e0b; }
 .section-icon.purple { background-color: #8b5cf6; }
-.section-icon.teal { background-color: #14b8a6; }
-.section-icon.red { background-color: #ef4444; }
+.section-icon.teal   { background-color: #14b8a6; }
+.section-icon.red    { background-color: #ef4444; }
 
 .section-header h3 {
     font-size: 1.1rem;
@@ -312,7 +95,7 @@ body {
     margin-top: 0.15rem;
 }
 
-/* ===== 7. GRIDS ===== */
+/* ===== GRIDS ===== */
 .form-grid {
     display: grid;
     gap: 1.1rem 1.2rem;
@@ -330,7 +113,7 @@ body {
     grid-column: 1 / -1;
 }
 
-/* ===== 8. CAMPOS DEL FORMULARIO ===== */
+/* ===== CAMPOS DEL FORMULARIO ===== */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -375,7 +158,166 @@ body {
     min-height: 80px;
 }
 
-/* ===== 9. RADIO INLINE (Píldoras horizontales) ===== */
+/* ===== TEXTAREAS ESPECÍFICOS ===== */
+#Enfermedad_Actual {
+    min-height: 150px;
+    resize: vertical;
+}
+
+#DescripcionEx {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* ===== SUBTÍTULOS EN SECCIONES ===== */
+.sub-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--border-color);
+    margin-bottom: 0.3rem;
+}
+
+.sub-title i {
+    font-size: 0.9rem;
+}
+
+/* ===== ANTECEDENTES - TABLA CLÍNICA ===== */
+.antecedentes-tabla {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+    background-color: #ffffff;
+}
+
+.ant-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.15s ease;
+    min-height: 48px;
+}
+
+.ant-row:last-child {
+    border-bottom: none;
+}
+
+.ant-row:hover {
+    background-color: #f8fafc;
+}
+
+.ant-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    user-select: none;
+    min-width: 180px;
+    flex-shrink: 0;
+}
+
+.ant-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary-color);
+    flex-shrink: 0;
+    cursor: pointer;
+    margin: 0;
+}
+
+.ant-item input[type="checkbox"]:checked + span {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Bloque extra (FUR / texto) — OCULTO por defecto */
+.ant-extra {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: flex-end;
+    animation: fadeInExtra 0.25s ease;
+}
+
+/* Se muestra SOLO cuando el checkbox está marcado */
+.ant-row:has(input[type="checkbox"]:checked) .ant-extra {
+    display: flex;
+}
+
+@keyframes fadeInExtra {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.ant-input-texto {
+    flex: 1;
+    max-width: 320px;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    color: var(--text-dark);
+    background-color: #ffffff;
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ant-input-texto:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(9, 140, 215, 0.12);
+}
+
+.ant-input-texto::placeholder {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.ant-extra-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ant-input-fecha {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    color: var(--text-dark);
+    background-color: #ffffff;
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ant-input-fecha:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(9, 140, 215, 0.12);
+}
+
+/* ===== RADIO INLINE (Píldoras horizontales) ===== */
 .radio-inline {
     display: flex;
     flex-wrap: wrap;
@@ -401,7 +343,7 @@ body {
     width: auto;
     max-width: 100%;
     box-sizing: border-box;
-    overflow: visible;      /* 👈 permite que el texto se vea completo */
+    overflow: visible;
 }
 
 .radio-pill input[type="radio"] {
@@ -409,7 +351,7 @@ body {
     cursor: pointer;
     margin: 0;
     flex-shrink: 0;
-    width: 16px;            /* 👈 ancho fijo para el radio */
+    width: 16px;
     height: 16px;
 }
 
@@ -417,8 +359,8 @@ body {
     display: inline-block;
     text-align: left;
     line-height: 1.3;
-    white-space: nowrap;    /* 👈 evita saltos pero NO corta el texto */
-    overflow: visible;      /* 👈 el texto puede crecer libremente */
+    white-space: nowrap;
+    overflow: visible;
 }
 
 .radio-pill:hover {
@@ -447,7 +389,7 @@ body {
     accent-color: #ffffff;
 }
 
-/* ===== 10. RADIO LIST (Lista vertical limpia) ===== */
+/* ===== RADIO LIST (Lista vertical limpia) ===== */
 .radio-list {
     display: flex;
     flex-direction: column;
@@ -497,7 +439,7 @@ body {
     font-weight: 700;
 }
 
-/* ===== 11. ACCIONES FINALES ===== */
+/* ===== ACCIONES FINALES ===== */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -545,72 +487,7 @@ body {
     background-color: #cbd5e1;
 }
 
-/* ===== 12. RESPONSIVE ===== */
-@media (max-width: 1100px) {
-    .grid-3 {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 900px) {
-    .sidebar {
-        width: 70px;
-        padding: 1.5rem 0.5rem;
-    }
-    .sidebar nav ul li a {
-        justify-content: center;
-    }
-    .sidebar nav ul li a:not(.active) {
-        font-size: 0;
-    }
-    .sidebar nav ul li a i {
-        font-size: 1.1rem;
-    }
-    .submenu {
-        display: none;
-    }
-}
-
-@media (max-width: 700px) {
-    .topbar {
-        padding: 0 1rem;
-    }
-    .user-name {
-        display: none;
-    }
-    .content {
-        padding: 1rem;
-    }
-    .main-content {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        padding: 0.5rem;
-    }
-    .sidebar nav ul {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    .sidebar nav ul li a {
-        padding: 0.6rem;
-    }
-    .grid-2,
-    .grid-3 {
-        grid-template-columns: 1fr;
-    }
-    .form-section {
-        padding: 1.2rem 1rem;
-    }
-    .form-actions {
-        flex-direction: column-reverse;
-    }
-    .action-btn {
-        justify-content: center;
-        width: 100%;
-    }
-}
-
+/* ===== PESTAÑAS ===== */
 .tabs-nav {
     display: flex;
     gap: 0.5rem;
@@ -661,16 +538,6 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-@media (max-width: 600px) {
-    .tabs-nav {
-        flex-direction: column;
-    }
-    .tab-btn {
-        justify-content: center;
-        width: 100%;
-    }
 }
 
 /* ===== BARRA DE BÚSQUEDA DE PACIENTE ===== */
@@ -791,4 +658,51 @@ body {
 .paciente-seleccionado strong {
     font-weight: 700;
     margin-right: 0.3rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+    .grid-3 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .grid-2,
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+    .form-section {
+        padding: 1.2rem 1rem;
+    }
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    .action-btn {
+        justify-content: center;
+        width: 100%;
+    }
+    .ant-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .ant-extra {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 1.6rem;
+    }
+    .ant-input-texto {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .tabs-nav {
+        flex-direction: column;
+    }
+    .tab-btn {
+        justify-content: center;
+        width: 100%;
+    }
 }

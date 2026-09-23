@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONCOPATH - Historia Clínica Hemato</title>
+    <link rel="stylesheet" href="../css/Base.css">
     <link rel="stylesheet" href="css/HCHemato.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -63,33 +64,42 @@
             <main class="content">
 
                 <div class="content-header">
-                        <div>
-                            <h2>REGISTRO DE HISTORIA CLÍNICA HEMATO - ONCOLOGÍA</h2>
-                            <p class="subtitle">Complete los pasos para registrar la historia hematológica del paciente</p>
-                        </div>
-                        <button type="button" class="btn-secondary" onclick="window.location.href='../pacientes.html'">
-                            <i class="fas fa-arrow-left"></i> Volver
-                        </button>
+                    <div>
+                        <h2>REGISTRO DE HISTORIA CLÍNICA HEMATO - ONCOLOGÍA</h2>
+                        <p class="subtitle">Complete los pasos para registrar la historia hematológica del paciente</p>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="window.location.href='../pacientes.html'">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
                 </div>
 
+                <!-- ===== PESTAÑAS (4 pasos) ===== -->
                 <div class="tabs-nav">
-                        <button type="button" class="tab-btn active" onclick="mostrarTab(event, 'tab-buscar')">
-                            <i class="fas fa-search"></i> 1. Buscar Paciente
-                        </button>
-                        <button type="button" class="tab-btn locked" id="btnTabConsulta" onclick="intentarIrATab('tab-consulta')" disabled>
-                            <i class="fas fa-notes-medical"></i> 2. Consulta y Diagnóstico
-                            <i class="fas fa-lock" style="font-size: 0.7rem; margin-left: 0.3rem;"></i>
-                        </button>
-                        <button type="button" class="tab-btn locked" id="btnTabTratamiento" onclick="intentarIrATab('tab-tratamiento')" disabled>
-                            <i class="fas fa-clipboard-list"></i> 3. Plan de Tratamiento
-                            <i class="fas fa-lock" style="font-size: 0.7rem; margin-left: 0.3rem;"></i>
-                        </button>
+                    <button type="button" class="tab-btn active" onclick="mostrarTab(event, 'tab-buscar')">
+                        <i class="fas fa-search"></i> 1. Buscar Paciente
+                    </button>
+
+                    <button type="button" class="tab-btn locked" id="btnTabConsulta" onclick="intentarIrATab('tab-consulta')" disabled>
+                        <i class="fas fa-notes-medical"></i> 2. Consulta y Diagnóstico
+                        <i class="fas fa-lock" style="font-size: 0.7rem; margin-left: 0.3rem;"></i>
+                    </button>
+
+                    <button type="button" class="tab-btn locked" id="btnTabClinica" onclick="intentarIrATab('tab-clinica')" disabled>
+                        <i class="fas fa-user-md"></i> 3. Clínica del Paciente
+                        <i class="fas fa-lock" style="font-size: 0.7rem; margin-left: 0.3rem;"></i>
+                    </button>
+
+                    <button type="button" class="tab-btn locked" id="btnTabTratamiento" onclick="intentarIrATab('tab-tratamiento')" disabled>
+                        <i class="fas fa-clipboard-list"></i> 4. Plan de Tratamiento
+                        <i class="fas fa-lock" style="font-size: 0.7rem; margin-left: 0.3rem;"></i>
+                    </button>
                 </div>
 
                 <form id="formPaciente" onsubmit="event.preventDefault();">
 
-<!--TAB 1-->
- 
+                    <!-- ============================================= -->
+                    <!-- TAB 1: BUSCAR PACIENTE -->
+                    <!-- ============================================= -->
                     <div id="tab-buscar" class="tab-content active">
 
                         <section class="form-section">
@@ -125,7 +135,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>#001</td>
+                                            <td>#324</td>
                                             <td>12345678</td>
                                             <td>Juan Pérez</td>
                                             <td>45</td>
@@ -138,7 +148,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>#002</td>
+                                            <td>#246</td>
                                             <td>23456789</td>
                                             <td>María Gómez</td>
                                             <td>32</td>
@@ -151,7 +161,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>#003</td>
+                                            <td>#328</td>
                                             <td>34567890</td>
                                             <td>Carlos Ruiz</td>
                                             <td>58</td>
@@ -164,7 +174,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>#004</td>
+                                            <td>#654</td>
                                             <td>45678901</td>
                                             <td>Lucía Fernández</td>
                                             <td>27</td>
@@ -177,7 +187,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>#005</td>
+                                            <td>#505</td>
                                             <td>56789012</td>
                                             <td>Pedro Martínez</td>
                                             <td>61</td>
@@ -210,7 +220,9 @@
 
                     </div>
 
-<!--TAB 2-->
+                    <!-- ============================================= -->
+                    <!-- TAB 2: CONSULTA Y DIAGNÓSTICO -->
+                    <!-- ============================================= -->
                     <div id="tab-consulta" class="tab-content">
 
                         <section class="form-section">
@@ -414,9 +426,214 @@
                             </div>
                         </section>
 
-                        <!-- Botón continuar -->
                         <div class="form-actions">
                             <button type="button" class="action-btn cancel-btn" onclick="continuarPaso('tab-buscar')">
+                                <i class="fas fa-arrow-left"></i> Atrás
+                            </button>
+                            <button type="button" class="action-btn save-btn" onclick="continuarPaso('tab-clinica')">
+                                Continuar <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- ============================================= -->
+                    <!-- TAB 3: CLÍNICA DEL PACIENTE (Enfermedad + Antecedentes + Examen Físico) -->
+                    <!-- ============================================= -->
+                    <div id="tab-clinica" class="tab-content">
+
+                        <!-- ENFERMEDAD ACTUAL -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon orange"><i class="fas fa-file-medical"></i></div>
+                                <div>
+                                    <h3>Enfermedad Actual</h3>
+                                    <p>Describa la enfermedad que motiva la consulta</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid grid-2" style="margin-top: 0.5rem;">
+                                <div class="form-group full-width">
+                                    <label for="Enfermedad_Actual">Enfermedad Actual</label>
+                                    <textarea id="Enfermedad_Actual" name="enfermedadActual" rows="6"
+                                              placeholder="Describa la enfermedad actual del paciente: inicio, evolución, síntomas, tratamientos previos..."></textarea>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ANTECEDENTES -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon red"><i class="fas fa-history"></i></div>
+                                <div>
+                                    <h3>Antecedentes Personales</h3>
+                                    <p>Seleccione los antecedentes y especifique si es necesario</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 0.5rem;">
+                                <div class="antecedentes-tabla">
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Cardiovascular">
+                                            <span>Cardiovascular</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleCardiovascular" placeholder="Especifique..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Respiratorio">
+                                            <span>Respiratorio</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleRespiratorio" placeholder="Especifique..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Gastrointestinal">
+                                            <span>Gastrointestinal</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleGastrointestinal" placeholder="Especifique..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Renal">
+                                            <span>Renal</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleRenal" placeholder="Especifique..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Tabaco y/o Licor">
+                                            <span>Tabaco y/o Licor</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleTabaco" placeholder="Cantidad / frecuencia..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="ORL/CVC">
+                                            <span>ORL/CVC</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleORL" placeholder="Especifique..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Vascular">
+                                            <span>Vascular</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleVascular" placeholder="Especifique..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Hematológico">
+                                            <span>Hematológico</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <input type="text" name="detalleHematologico" placeholder="Especifique..." class="ant-input-texto">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Menopáusica">
+                                            <span>Menopáusica</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <span class="ant-extra-label">FUR</span>
+                                            <input type="date" name="furMenopausica" class="ant-input-fecha">
+                                        </div>
+                                    </div>
+
+                                    <div class="ant-row">
+                                        <label class="ant-item">
+                                            <input type="checkbox" name="antecedentes" value="Premenopáusica">
+                                            <span>Premenopáusica</span>
+                                        </label>
+                                        <div class="ant-extra">
+                                            <span class="ant-extra-label">FUR</span>
+                                            <input type="date" name="furPremenopausica" class="ant-input-fecha">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- EXAMEN FÍSICO -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon teal"><i class="fas fa-user-md"></i></div>
+                                <div>
+                                    <h3>Examen Físico</h3>
+                                    <p>Registre los hallazgos del examen físico del paciente</p>
+                                </div>
+                            </div>
+                            <div class="form-grid grid-2" style="margin-top: 1.2rem;">
+                                <div class="form-group">
+                                    <label for="localizacionPrimaria">Grupo Cooperativo Oncológico del Este (E.C.O.G)</label>
+                                    <textarea id="localizacionPrimaria" name="localizacionPrimaria" rows="3"
+                                              placeholder=" 0 al 5..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipoHistologia">KARNOFSKY</label>
+                                    <textarea id="tipoHistologia" name="KARNOFSKY" rows="3"
+                                              placeholder="0 al 100..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Signos Vitales -->
+                            <div class="form-grid grid-3" style="margin-top: 0.6rem;">
+                                <div class="form-group">
+                                    <label for="ta">Tension (TA)</label>
+                                    <input type="text" id="ta" name="ta" placeholder="Ej: 120/80 mmHg">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fc">Pulso </label>
+                                    <input type="text" id="fc" name="fc" placeholder="Ej: 80 lpm">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fr">Temperatura </label>
+                                    <input type="text" id="fr" name="fr" placeholder="Ej: 36.5 °">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fr">Frecuencia respiratoria </label>
+                                    <input type="text" id="fr" name="fr" placeholder="Ej: 18 rpm">
+                                </div>
+                            </div>
+
+                            <h4 class="sub-title" style="margin-top: 1.5rem;"> Descripción del Examen Fisíco</h4>
+                            <div class="form-grid grid-2" style="margin-top: 0.6rem;">
+                                <div class="form-group full-width">
+                                    <textarea id="DescripcionEx" name="aspectoGeneral" rows="3"
+                                              placeholder="Describa el aspecto general del paciente..."></textarea>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Botones -->
+                        <div class="form-actions">
+                            <button type="button" class="action-btn cancel-btn" onclick="continuarPaso('tab-consulta')">
                                 <i class="fas fa-arrow-left"></i> Atrás
                             </button>
                             <button type="button" class="action-btn save-btn" onclick="continuarPaso('tab-tratamiento')">
@@ -425,7 +642,10 @@
                         </div>
 
                     </div>
-<!--TAB 3-->
+
+                    <!-- ============================================= -->
+                    <!-- TAB 4: PLAN DE TRATAMIENTO -->
+                    <!-- ============================================= -->
                     <div id="tab-tratamiento" class="tab-content">
 
                         <section class="form-section">
@@ -469,7 +689,7 @@
 
                         <!-- Botones finales -->
                         <div class="form-actions">
-                            <button type="button" class="action-btn cancel-btn" onclick="continuarPaso('tab-consulta')">
+                            <button type="button" class="action-btn cancel-btn" onclick="continuarPaso('tab-clinica')">
                                 <i class="fas fa-arrow-left"></i> Atrás
                             </button>
                             <button type="submit" class="action-btn save-btn" onclick="guardarPaciente()">
@@ -484,8 +704,9 @@
             </main>
         </div>
     </div>
-                <script src="../JS/Sesion.JS"></script>
-                <script src="../js/hemato.js"></script>
-                <script src="../JS/Bloqueodepestañas.js"></script>
+
+    <script src="../JS/Sesion.JS"></script>
+    <script src="../js/hemato.js"></script>
+    <script src="../JS/Bloqueodepestañas.js"></script>
 </body>
 </html>

@@ -58,6 +58,6 @@ function mostrarMensaje(texto, tipo) {
     if (!mensaje) return;
 
     mensaje.textContent = texto;
-    mensaje.className = `login-message ${tipo}`;
+    mensaje.className = `login_verificacion ${tipo}`;
     mensaje.style.display = "block";
 }

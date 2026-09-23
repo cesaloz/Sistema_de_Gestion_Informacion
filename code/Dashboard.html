@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONCOPATH - Inicio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/Base.css">
     <link rel="stylesheet" href="css/Dash.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -12,13 +14,13 @@
 
     <div class="dashboard-container">
 
-        <header class="topbar">
-            <div class="topbar-left">
+        <header class="BarraSuperior">
+            <div class="BarraIzq">
                 <i class="fas fa-hospital-user logo-icon"></i>
                 <h1>Oncopath</h1>
             </div>
 
-            <div class="topbar-right">
+            <div class="BarraDere">
                 <div class="user-info">
                     <i class="fas fa-user-circle user-avatar"></i>
                     <span class="user-name">Dra. Ana López</span>
@@ -105,9 +107,43 @@
 
             <main class="content">
 
-                <div class="content-header">
-                    <h2>Estadísticas Regionales</h2>
-                </div>
+                <!-- ===== ESTADÍSTICAS REGIONALES ===== -->
+<div class="content-header">
+    <h2>Estadísticas Regionales</h2>
+    <p class="subtitle">Distribución de pacientes por ubicación geográfica</p>
+</div>
+
+<section class="stats-regionales">
+
+    <!-- Gráfico 1: Por Estado -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <div class="chart-icon blue"><i class="fas fa-map-marked-alt"></i></div>
+            <div>
+                <h3>Pacientes por Estado</h3>
+                <p>Distribución por estado de procedencia</p>
+            </div>
+        </div>
+        <div class="chart-body">
+            <canvas id="graficoEstados"></canvas>
+        </div>
+    </div>
+
+    <!-- Gráfico 2: Por Municipio -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <div class="chart-icon purple"><i class="fas fa-map-pin"></i></div>
+            <div>
+                <h3>Pacientes por Municipio</h3>
+                <p>Del estado con más registros</p>
+            </div>
+        </div>
+        <div class="chart-body">
+            <canvas id="graficoMunicipios"></canvas>
+        </div>
+    </div>
+
+</section>
 
                 <div class="content-header">
                     <h2>Resumen de Pacientes</h2>
@@ -234,7 +270,9 @@
         </div>
     </div>
 
-    <script src="../JS/Sesion.JS"></script>
+    <script src="JS/Sesion.JS"></script>
+    <script src="JS/estadisticas.js"></script>
+
 
 </body>
 </html>

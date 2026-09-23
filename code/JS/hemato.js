@@ -173,6 +173,7 @@ function guardarPaciente() {
        ========================================================== */
 
     alert(`✅ Historia Clínica guardada correctamente para el paciente ${datos.pacienteIdSeleccionado}.`);
+    window.location.href = "HCHemato.html";
 }
 
 

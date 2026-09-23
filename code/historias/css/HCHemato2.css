@@ -125,6 +125,24 @@ body {
     box-shadow: var(--shadow);
 }
 
+.sidebar {
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);                     /*Mantener la barra en Scroll*/
+    overflow-y: auto;
+    align-self: flex-start;
+}
+.sidebar {
+    scrollbar-width: none;      
+    -ms-overflow-style: none;    
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;               
+    width: 0;
+    height: 0;
+}
+
 .sidebar nav ul {
     list-style: none;
     display: flex;
