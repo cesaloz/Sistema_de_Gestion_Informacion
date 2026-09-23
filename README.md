@@ -11,3 +11,7 @@ Usuario:
 admin / 123
 doctor /doctor123
 enfermera / enf123
+
+
+USUARIO ADMINISTRADOR DE LA BASE DE DAROS:
+SAOAdmin / SAOAdmin2026
