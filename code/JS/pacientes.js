@@ -67,3 +67,7 @@ function actualizarContador() {
     const total = document.querySelectorAll("#tablaPacientes tbody tr").length;
     document.getElementById("contador").textContent = total;
 }
+
+function agregarPaciente() {
+    window.location.href = "historias/Registro_Paciente.html";
+}

@@ -196,6 +196,9 @@ tbody tr:hover {
 .action-btn.edit { color: #f59e0b; }
 .action-btn.edit:hover { background-color: #fffbeb; }
 
+.action-btn.Descarga { color: #f50b0b; }
+.action-btn.Descarga:hover { background-color: #fffbeb; }
+
 /* ===== ESTADÍSTICAS REGIONALES (gráficos) ===== */
 .stats-regionales {
     display: grid;
