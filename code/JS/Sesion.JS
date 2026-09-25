@@ -10,7 +10,7 @@ function cerrarSesion() {
     if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
         sessionStorage.removeItem("usuarioLogueado");
         localStorage.removeItem("usuarioLogueado");
-        window.location.href = "../login.html";
+        window.location.href = "../Login.php";
     }
 }
 
