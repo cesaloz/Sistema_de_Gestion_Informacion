@@ -48,7 +48,7 @@ function validarLogin(event) {
 
     // Redirigir después de un pequeño delay
     setTimeout(() => {
-        window.location.href = "Dashboard.html";
+        window.location.href = "Dashboard.php";
     }, 800);
 }
 

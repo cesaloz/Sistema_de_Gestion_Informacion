@@ -1,0 +1,21 @@
+# Archivos de configuración sensible
+.env
+*.env
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Configuración de VS Code
+.vscode/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de respaldo
+*.backup
+*.bak
+
+# Carpeta de respaldos
+respaldos/
