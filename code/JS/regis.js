@@ -6,7 +6,7 @@
 /* ===== CERRAR SESIÓN ===== */
 function cerrarSesion() {
     if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
-        window.location.href = "../login.html";
+        window.location.href = "Login.php";
     }
 }
 

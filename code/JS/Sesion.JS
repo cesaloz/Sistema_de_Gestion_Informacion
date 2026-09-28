@@ -1,24 +1,31 @@
+/* ============================================
+   ONCOPATH - Sesión
+   ============================================ */
 
+/* ===== SUBMENÚ ===== */
 function toggleSubmenu(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     const li = e.currentTarget.parentElement;
     li.classList.toggle("open");
 }
 
-
+/* ===== CERRAR SESIÓN ===== */
 function cerrarSesion() {
     if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
-        sessionStorage.removeItem("usuarioLogueado");
-        localStorage.removeItem("usuarioLogueado");
-        window.location.href = "../login.html";
+
+        // Detectar si estamos en subcarpeta
+        const enSubcarpeta = window.location.pathname.includes("/historias/") ||
+                             window.location.pathname.includes("/modulos/");
+
+        if (enSubcarpeta) {
+            window.location.href = "../Cerrarsesion.php";
+        } else {
+            window.location.href = "Cerrarsesion.php";
+        }
     }
 }
 
+/* ===== MOSTRAR NOMBRE DEL USUARIO (lo maneja PHP directamente) ===== */
 document.addEventListener("DOMContentLoaded", function () {
-    const sesion = sessionStorage.getItem("usuarioLogueado");
-    if (sesion) {
-        const data = JSON.parse(sesion);
-        const nombreEl = document.querySelector(".user-name");
-        if (nombreEl) nombreEl.textContent = data.nombre;
-    }
+    console.log("✅ Sesión manejada por PHP");
 });
