@@ -20,9 +20,13 @@ try {
 
 registrar_actividad('Acceso al dashboard', 'sistema');
 
+<<<<<<< Updated upstream
 ?>
 
 
+=======
+    ?>
+>>>>>>> Stashed changes
 
 <!DOCTYPE html>
 <html lang="es">
