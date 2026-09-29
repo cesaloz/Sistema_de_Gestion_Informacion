@@ -1,63 +1,9 @@
-/* ===================================================================
-   ONCOPATH - registro.js
-   Funciones para el Registro de Paciente
-   =================================================================== */
-
-/* ===== CERRAR SESIÓN ===== */
-function cerrarSesion() {
-    if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
-        window.location.href = "../login.html";
-    }
-}
-
-/* ===== SUBMENÚ ===== */
-function toggleSubmenu(e) {
-    e.preventDefault();
-    e.currentTarget.parentElement.classList.toggle("open");
-}
-
-/* ===== PESTAÑAS ===== */
-function mostrarTab(e, id) {
-    if (e) e.preventDefault();
-
-    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-
-    const tab = document.getElementById(id);
-    if (tab) tab.classList.add("active");
-
-    const boton = document.querySelector(`.tab-btn[onclick*="${id}"]`);
-    if (boton) boton.classList.add("active");
-}
-
-/* ===== FECHA DE HOY ===== */
-document.addEventListener("DOMContentLoaded", function () {
-    const hoy = new Date().toISOString().split("T")[0];
-    const campoFecha = document.getElementById("fecha");
-    if (campoFecha) campoFecha.value = hoy;
-});
-
-/* ===== CALCULAR EDAD ===== */
-function calcularEdad() {
-    const fechaNac = document.getElementById("fechaNacimiento")?.value;
-    if (!fechaNac) return;
-
-    const nacimiento = new Date(fechaNac);
-    const hoy = new Date();
-
-    let edad = hoy.getFullYear() - nacimiento.getFullYear();
-    const mes = hoy.getMonth() - nacimiento.getMonth();
-    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
-
-    const campoEdad = document.getElementById("edad");
-    if (campoEdad) campoEdad.value = edad;
-}
-
-/* ===== GUARDAR PACIENTE ===== */
-function guardarPaciente() {
+/* ===== GUARDAR PACIENTE EN LA BD ===== */
+async function guardarPaciente() {
     const form = document.getElementById("formPaciente");
     if (!form) return;
 
+    // Validaciones básicas
     const obligatorios = [
         { id: "institucion",     nombre: "Institución de Adscripción" },
         { id: "establecimiento", nombre: "Nombre del Establecimiento" },
@@ -96,29 +42,54 @@ function guardarPaciente() {
         return;
     }
 
-    const datos = {};
-    form.querySelectorAll("input, select, textarea").forEach(campo => {
-        if (!campo.name) return;
-        if (campo.type === "radio") {
-            if (campo.checked) datos[campo.name] = campo.value;
-        } else if (campo.type === "checkbox") {
-            datos[campo.name] = campo.checked;
+    // === ENVIAR AL SERVIDOR ===
+    const formData = new FormData(form);
+
+    // Deshabilitar botón
+    const btnGuardar = form.querySelector('button[type="submit"]');
+    if (btnGuardar) {
+        btnGuardar.disabled = true;
+        btnGuardar.textContent = "Guardando...";
+    }
+
+    try {
+        const respuesta = await fetch("../user_confic.php", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await respuesta.json();
+
+        if (data.success) {
+            alert(`✅ Paciente registrado correctamente.\nID: ${data.id_paciente}`);
+            window.location.href = "../Pacientes.php";
         } else {
-            datos[campo.name] = campo.value;
+            alert(`❌ Error: ${data.message}`);
         }
-    });
-
-    console.log("📋 Datos del Paciente:", datos);
-
-    /* ==========================================================
-       🔌 AQUÍ ENLAZARÁS TU BD:
-
-       fetch("http://localhost:3000/api/pacientes", {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(datos)
-       })
-       ========================================================== */
-
-    alert(`✅ Paciente "${datos.nombres} ${datos.apellidos}" registrado correctamente.`);
+    } catch (error) {
+        console.error("Error detallado:", error);
+        alert("❌ Error de conexión. Revise la consola (F12).");
+    } finally {
+        if (btnGuardar) {
+            btnGuardar.disabled = false;
+            btnGuardar.textContent = "Guardar Paciente";
+        }
+    }
 }
+
+/* ===== CALCULAR EDAD ===== */
+function calcularEdad() {
+    const fechaNac = document.getElementById("fechaNacimiento")?.value;
+    if (!fechaNac) return;
+
+    const nacimiento = new Date(fechaNac);
+    const hoy = new Date();
+
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
+
+    const campoEdad = document.getElementById("edad");
+    if (campoEdad) campoEdad.value = edad;
+}
+

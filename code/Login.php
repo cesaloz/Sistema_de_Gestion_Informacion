@@ -76,6 +76,14 @@ require_once 'config/inic.php';
         }
     }
 
+
+        $error = '';
+        $usuario_ingresado = '';
+
+        if (isset($_GET['error']) && $_GET['error'] === 'no_sesion') {
+            $error = '🔒 Debes iniciar sesión para acceder a esa página.';
+        }
+
 ?>
 
 
