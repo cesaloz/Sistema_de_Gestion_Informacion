@@ -1,3 +1,28 @@
+<?php
+
+require_once 'config/inic.php';
+verificar_sesion();
+
+try {
+    $con = conexion::getConnection();
+
+    $stats = [
+
+        'pacientes' => $con->query("SELECT COUNT(*) FROM pacientes")->fetchcolumn(),
+        'ciudades' => $con->query("SELECT COUNT(*) FROM ciudades")->fetchcolumn(),
+        'estados' => $con->query("SELECT COUNT(*) FROM estados")->fetchcolumn(),
+        'no_historia' => $con->query("SELECT COUNT(*) FROM pacientes")->fetchcolumn(),
+        ];
+
+} catch(PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
+
+registrar_actividad('Acceso al dashboard', 'sistema');
+
+    ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,40 +63,40 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="Dashboard.html" class="active">
+                            <a href="Dashboard.php" class="active">
                                 <i class="fas fa-chart-pie"></i> Inicio
                             </a>
                         </li>
 
                         <li>
-                            <a href="pacientes.html">
+                            <a href="pacientes.php">
                                 <i class="fas fa-users"></i> Pacientes
                             </a>
                         </li>
 
                         <li class="has-submenu">
-                            <a href="HCHemato.html" class="menu-toggle" onclick="toggleSubmenu(event)">
+                            <a href="HCHemato.php" class="menu-toggle" onclick="toggleSubmenu(event)">
                                 <i class="fas fa-edit"></i> Llenado de Historial
                                 <i class="fas fa-chevron-down arrow"></i>
                             </a>
                             <ul class="submenu">
                                 <li>
-                                    <a href="historias/Registro_Paciente.html">
+                                    <a href="historias/Registro_Paciente.php">
                                         <i class="fas fa-user-plus"></i> REGISTRO DE PACIENTES
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="historias/HCHemato.html">
+                                    <a href="historias/HCHemato.php">
                                         <i class="fas fa-microscope"></i> HISTORIA CLÍNICA HEMATO
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="historias/HCCirugia.html">
+                                    <a href="historias/HCCirugia.php">
                                         <i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGÍA
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="historias/HCMamografia.html">
+                                    <a href="historias/HCMamografia.php">
                                         <i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFÍA
                                     </a>
                                 </li>
@@ -79,19 +104,19 @@
                         </li>
 
                         <li>
-                            <a href="diagnostico.html">
+                            <a href="diagnostico.php">
                                 <i class="fas fa-stethoscope"></i> Diagnóstico
                             </a>
                         </li>
 
                         <li>
-                            <a href="consulta.html">
+                            <a href="consulta.php">
                                 <i class="fas fa-comments"></i> Consulta
                             </a>
                         </li>
 
                         <li>
-                            <a href="cirugia.html">
+                            <a href="cirugia.php">
                                 <i class="fas fa-syringe"></i> Cirugía
                             </a>
                         </li>
@@ -156,7 +181,7 @@
                     <div class="card">
                         <div class="card-icon blue"><i class="fas fa-users"></i></div>
                         <div class="card-info">
-                            <h3>124</h3>
+                            <h3><?php echo $stats['pacientes']; ?></h3>
                             <p>Pacientes Totales</p>
                         </div>
                     </div>
@@ -164,7 +189,7 @@
                     <div class="card">
                         <div class="card-icon green"><i class="fas fa-calendar-day"></i></div>
                         <div class="card-info">
-                            <h3>18</h3>
+                            <h3><?php echo $stats['estados']; ?></h3>
                             <p>Citas Hoy</p>
                         </div>
                     </div>
@@ -172,7 +197,7 @@
                     <div class="card">
                         <div class="card-icon orange"><i class="fas fa-notes-medical"></i></div>
                         <div class="card-info">
-                            <h3>7</h3>
+                            <h3><?php echo $stats['no_historia']; ?></h3>
                             <p>Nuevos Registros</p>
                         </div>
                     </div>

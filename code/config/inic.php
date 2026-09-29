@@ -5,29 +5,32 @@ if (session_status() == PHP_SESSION_NONE) {
 
 date_default_timezone_set('America/Caracas');
 
-// Constantes
+
+define('BASE_URL', '/code');
+
 define('APP_NAME', 'Sistema de Información Oncológica');
 define('APP_VERSION', '1.0');
 define('APP_INSTITUTION', 'Servicio Desconcentrado Especializado en Diagnóstico y Tratamiento de Enfermedades Oncológicas del Estado Lara');
 
 require_once __DIR__ . '/conecion.php';
 
+
 function verificar_sesion() {
-    if (!isset($_SESSION['id_usuario'])) {
-        header('location: ../login.html'); // Corregido: de --/ a ../
+    if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
+        header('Location: ' . BASE_URL . '/Login.php?error=no_sesion');
         exit();
     }
 }
 
 function verificar_rol($roles_permitidos = []) {
     if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], $roles_permitidos)) {
-        header('location: ../Dashboard.html?error=sin_permiso');
+        header('Location: ' . BASE_URL . '/Dashboard.php?error=sin_permiso');
         exit();
     }
 }
 
 function usuario_actual() {
-    return $_SESSION['nombre_completo'] ?? 'usuario';
+    return $_SESSION['nombre_completo'] ?? 'Usuario';
 }
 
 function registrar_actividad($accion, $tabla = null, $registro_id = null) {
