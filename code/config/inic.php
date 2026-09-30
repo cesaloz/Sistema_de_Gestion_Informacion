@@ -49,4 +49,13 @@ function registrar_actividad($accion, $tabla = null, $registro_id = null) {
         error_log("Error en auditoría: " . $e->getMessage());
     }
 }
+
+function formatear_fecha($fecha) {
+    if (empty($fecha) || $fecha === '0000-00-00' || $fecha === null) {
+        return '—';
+    }
+    $timestamp = strtotime($fecha);
+    if ($timestamp === false) return '—';
+    return date('d/m/Y', $timestamp);
+}
 ?>
