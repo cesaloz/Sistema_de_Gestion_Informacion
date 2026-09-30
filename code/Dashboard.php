@@ -6,23 +6,43 @@ verificar_sesion();
 try {
     $con = conexion::getConnection();
 
+    /* ===== ESTADÍSTICAS GENERALES ===== */
     $stats = [
+        'pacientes' => $con->query("SELECT COUNT(*) FROM pacientes")->fetchColumn(),
+        'ciudades'  => $con->query("SELECT COUNT(*) FROM ciudades")->fetchColumn(),
+        'estados'   => $con->query("SELECT COUNT(*) FROM estados")->fetchColumn(),
+        'no_historia'=> $con->query("SELECT COUNT(*) FROM pacientes")->fetchColumn(),
+    ];
 
-        'pacientes' => $con->query("SELECT COUNT(*) FROM pacientes")->fetchcolumn(),
-        'ciudades' => $con->query("SELECT COUNT(*) FROM ciudades")->fetchcolumn(),
-        'estados' => $con->query("SELECT COUNT(*) FROM estados")->fetchcolumn(),
-        'no_historia' => $con->query("SELECT COUNT(*) FROM pacientes")->fetchcolumn(),
-        ];
+    /* ===== ÚLTIMOS 5 PACIENTES ===== */
+    $stmt = $con->query("
+        SELECT
+            id_paciente,
+            no_historia,
+            cedula,
+            TRIM(
+                COALESCE(primer_nombre, '') || ' ' || 
+                COALESCE(segundo_nombre, '') || ' ' || 
+                COALESCE(primer_apellido, '') || ' ' || 
+                COALESCE(segundo_apellido, '')
+            ) AS nombre_completo,
+            edad,
+            sexo,
+            fecha_ingreso_sistema,
+            'Activo' AS estado
+        FROM pacientes
+        ORDER BY id_paciente DESC
+        LIMIT 5
+    ");
+    $ultimosPacientes = $stmt->fetchAll();
 
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     die("Error: " . $e->getMessage());
 }
 
 registrar_actividad('Acceso al dashboard', 'sistema');
 
-    ?>
-
-
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -48,7 +68,7 @@ registrar_actividad('Acceso al dashboard', 'sistema');
             <div class="BarraDere">
                 <div class="user-info">
                     <i class="fas fa-user-circle user-avatar"></i>
-                    <span class="user-name">Dra. Ana López</span>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['nombre_completo']); ?></span>
                 </div>
                 <button class="logout-btn" onclick="cerrarSesion()">
                     <i class="fas fa-sign-out-alt"></i>
@@ -62,17 +82,8 @@ registrar_actividad('Acceso al dashboard', 'sistema');
             <aside class="sidebar">
                 <nav>
                     <ul>
-                        <li>
-                            <a href="Dashboard.php" class="active">
-                                <i class="fas fa-chart-pie"></i> Inicio
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="pacientes.php">
-                                <i class="fas fa-users"></i> Pacientes
-                            </a>
-                        </li>
+                        <li><a href="Dashboard.php" class="active"><i class="fas fa-chart-pie"></i> Inicio</a></li>
+                        <li><a href="pacientes.php"><i class="fas fa-users"></i> Pacientes</a></li>
 
                         <li class="has-submenu">
                             <a href="HCHemato.php" class="menu-toggle" onclick="toggleSubmenu(event)">
@@ -80,99 +91,58 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                                 <i class="fas fa-chevron-down arrow"></i>
                             </a>
                             <ul class="submenu">
-                                <li>
-                                    <a href="historias/Registro_Paciente.php">
-                                        <i class="fas fa-user-plus"></i> REGISTRO DE PACIENTES
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="historias/HCHemato.php">
-                                        <i class="fas fa-microscope"></i> HISTORIA CLÍNICA HEMATO
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="historias/HCCirugia.php">
-                                        <i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGÍA
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="historias/HCMamografia.php">
-                                        <i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFÍA
-                                    </a>
-                                </li>
+                                <li><a href="historias/Registro_Paciente.php"><i class="fas fa-user-plus"></i> REGISTRO DE PACIENTES</a></li>
+                                <li><a href="historias/HCHemato.php"><i class="fas fa-microscope"></i> HISTORIA CLÍNICA HEMATO</a></li>
+                                <li><a href="historias/HCCirugia.php"><i class="fas fa-notes-medical"></i> HISTORIA CLÍNICA CIRUGÍA</a></li>
+                                <li><a href="historias/HCMamografia.php"><i class="fas fa-clipboard-list"></i> HISTORIA CLÍNICA MAMOGRAFÍA</a></li>
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="diagnostico.php">
-                                <i class="fas fa-stethoscope"></i> Diagnóstico
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="consulta.php">
-                                <i class="fas fa-comments"></i> Consulta
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="cirugia.php">
-                                <i class="fas fa-syringe"></i> Cirugía
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-file-medical"></i> Historiales
-                            </a>
-                        </li>
+                        <li><a href="diagnostico.php"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
+                        <li><a href="consulta.php"><i class="fas fa-comments"></i> Consulta</a></li>
+                        <li><a href="cirugia.php"><i class="fas fa-syringe"></i> Cirugía</a></li>
+                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
                     </ul>
                 </nav>
             </aside>
 
             <main class="content">
 
-                <!-- ===== ESTADÍSTICAS REGIONALES ===== -->
-<div class="content-header">
-    <h2>Estadísticas Regionales</h2>
-    <p class="subtitle">Distribución de pacientes por ubicación geográfica</p>
-</div>
+                <!-- ===== ESTADÍSTICAS REGIONALES (gráficos) ===== -->
+                <div class="content-header">
+                    <h2>Estadísticas Regionales</h2>
+                    <p class="subtitle">Distribución de pacientes por ubicación geográfica</p>
+                </div>
 
-<section class="stats-regionales">
+                <section class="stats-regionales">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div class="chart-icon blue"><i class="fas fa-map-marked-alt"></i></div>
+                            <div>
+                                <h3>Pacientes por Estado</h3>
+                                <p>Distribución por estado de procedencia</p>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="graficoEstados"></canvas>
+                        </div>
+                    </div>
 
-    <!-- Gráfico 1: Por Estado -->
-    <div class="chart-card">
-        <div class="chart-header">
-            <div class="chart-icon blue"><i class="fas fa-map-marked-alt"></i></div>
-            <div>
-                <h3>Pacientes por Estado</h3>
-                <p>Distribución por estado de procedencia</p>
-            </div>
-        </div>
-        <div class="chart-body">
-            <canvas id="graficoEstados"></canvas>
-        </div>
-    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div class="chart-icon purple"><i class="fas fa-map-pin"></i></div>
+                            <div>
+                                <h3>Pacientes por Municipio</h3>
+                                <p>Del estado con más registros</p>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="graficoMunicipios"></canvas>
+                        </div>
+                    </div>
+                </section>
 
-    <!-- Gráfico 2: Por Municipio -->
-    <div class="chart-card">
-        <div class="chart-header">
-            <div class="chart-icon purple"><i class="fas fa-map-pin"></i></div>
-            <div>
-                <h3>Pacientes por Municipio</h3>
-                <p>Del estado con más registros</p>
-            </div>
-        </div>
-        <div class="chart-body">
-            <canvas id="graficoMunicipios"></canvas>
-        </div>
-            <button class="btn-primary" onclick="">
-                <i class="fas fa-plus"></i> Descargar estadisticas
-            </button>
-    </div>
-
-</section>
-
+                <!-- ===== RESUMEN DE PACIENTES ===== -->
                 <div class="content-header">
                     <h2>Resumen de Pacientes</h2>
                 </div>
@@ -189,7 +159,7 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                     <div class="card">
                         <div class="card-icon green"><i class="fas fa-calendar-day"></i></div>
                         <div class="card-info">
-                            <h3><?php echo $stats['estados']; ?></h3>
+                            <h3>18</h3>
                             <p>Citas Hoy</p>
                         </div>
                     </div>
@@ -197,7 +167,7 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                     <div class="card">
                         <div class="card-icon orange"><i class="fas fa-notes-medical"></i></div>
                         <div class="card-info">
-                            <h3><?php echo $stats['no_historia']; ?></h3>
+                            <h3><?php echo $stats ['no_historia']; ?></h3>
                             <p>Nuevos Registros</p>
                         </div>
                     </div>
@@ -211,6 +181,7 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                     </div>
                 </section>
 
+                <!-- ===== ÚLTIMOS PACIENTES ===== -->
                 <section class="table-container">
                     <div class="table-header">
                         <h3>Últimos Pacientes Registrados</h3>
@@ -230,63 +201,33 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>#001</td>
-                                <td>Juan Pérez</td>
-                                <td>45</td>
-                                <td>Quimioterapia</td>
-                                <td>2025-04-10</td>
-                                <td><span class="badge active">Activo</span></td>
-                                <td>
-                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#002</td>
-                                <td>María Gómez</td>
-                                <td>32</td>
-                                <td>Quimioterapia</td>
-                                <td>2025-04-09</td>
-                                <td><span class="badge active">Activo</span></td>
-                                <td>
-                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#003</td>
-                                <td>Carlos Ruiz</td>
-                                <td>58</td>
-                                <td>Quimioterapia</td>
-                                <td>2025-04-08</td>
-                                <td><span class="badge inactive">Inactivo</span></td>
-                                <td>
-                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#004</td>
-                                <td>Lucía Fernández</td>
-                                <td>27</td>
-                                <td>Quimioterapia</td>
-                                <td>2025-04-07</td>
-                                <td><span class="badge active">Activo</span></td>
-                                <td>
-                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn edit"><i class="fas fa-edit"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#005</td>
-                                <td>Pedro Martínez</td>
-                                <td>61</td>
-                                <td>Quimioterapia</td>
-                                <td>2025-04-06</td>
-                                <td><span class="badge pending">En Revisión</span></td>
-                                <td>
-                                    <button class="action-btn view"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn Descarga"><i class="fas fa-file-pdf"></i></button>
-                                </td>
-                            </tr>
+                            <?php if (empty($ultimosPacientes)): ?>
+                                <tr>
+                                    <td colspan="7" style="text-align:center; padding: 2rem; color: #94a3b8;">
+                                        <i class="fas fa-user-slash" style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;"></i>
+                                        No hay pacientes registrados aún.
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($ultimosPacientes as $p): ?>
+                                    <tr>
+                                        <td>#<?= htmlspecialchars($p['id_paciente']) ?></td>
+                                        <td><?= htmlspecialchars($p['nombre_completo']) ?></td>
+                                        <td><?= htmlspecialchars($p['edad']) ?></td>
+                                        <td><?= htmlspecialchars($p['diagnostico'] ?? '—') ?></td>
+                                        <td><?= date('d/m/Y', strtotime($p['fecha_ingreso_sistema'])) ?></td>
+                                        <td><span class="badge active"><?= htmlspecialchars($p['estado']) ?></span></td>
+                                        <td>
+                                            <button class="action-btn view" onclick="verPaciente(<?= $p['id_paciente'] ?>)">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-btn edit" onclick="editarPaciente(<?= $p['id_paciente'] ?>)">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </section>
@@ -297,7 +238,13 @@ registrar_actividad('Acceso al dashboard', 'sistema');
 
     <script src="JS/Sesion.JS"></script>
     <script src="JS/estadisticas.js"></script>
-
-
+    <script>
+        function verPaciente(id) {
+            window.location.href = "pacientes.php?ver=" + id;
+        }
+        function editarPaciente(id) {
+            window.location.href = "pacientes.php?editar=" + id;
+        }
+    </script>
 </body>
 </html>

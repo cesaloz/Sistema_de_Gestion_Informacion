@@ -160,15 +160,15 @@ try {
                         </thead>
 
                             <tbody>
-        <?php if (empty($pacientes)): ?>
-            <tr>
-                <td colspan="7" style="text-align:center; padding:2rem; color:#94a3b8;">
-                    No hay pacientes registrados.
-                </td>
-            </tr>
-        <?php else: ?>
-            <?php foreach ($pacientes as $p): ?>
-                <tr>
+                    <?php if (empty($pacientes)): ?>
+                        <tr>
+                            <td colspan="7" style="text-align:center; padding:2rem; color:#94a3b8;">
+                                No hay pacientes registrados.
+                            </td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($pacientes as $p): ?>
+                            <tr>
                     <td>#<?= htmlspecialchars($p['id_paciente']) ?></td>
                     <td><?= htmlspecialchars($p['nombre_completo']) ?></td>
                     <td><?= htmlspecialchars($p['edad']) ?></td>

@@ -1,3 +1,34 @@
+<?php
+require_once __DIR__ . '/../config/inic.php';
+verificar_sesion();
+try {
+    $con = conexion::getConnection();
+
+    /* ===== TRAER HISTORIAS HEMATO CON DATOS DEL PACIENTE ===== */
+    $stmt = $con->query("
+    SELECT
+        id_paciente,
+        cedula,
+        no_historia,
+        TRIM(
+            COALESCE(primer_nombre, '') || ' ' ||
+            COALESCE(segundo_nombre, '') || ' ' ||
+            COALESCE(primer_apellido, '') || ' ' ||
+            COALESCE(segundo_apellido, '')
+        ) AS nombre_completo,
+        edad,
+        sexo,
+        fecha_ingreso_sistema
+    FROM pacientes
+    ORDER BY id_paciente DESC
+    LIMIT 100
+");
+$pacientes = $stmt->fetchAll();
+
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,7 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONCOPATH - Historia Clínica Hemato</title>
     <link rel="stylesheet" href="../css/Base.css">
-    <link rel="stylesheet" href="css/HCHemato.css">
+<link rel="stylesheet" href="css/HCHemato.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -105,115 +136,82 @@
                     <!-- ============================================= -->
                     <div id="tab-buscar" class="tab-content active">
 
-                        <section class="form-section">
-                            <div class="section-header">
-                                <div class="section-icon blue"><i class="fas fa-search"></i></div>
-                                <div>
-                                    <h3>Buscar Paciente</h3>
-                                    <p>Busque por cédula, nombre o número de historia</p>
-                                </div>
-                            </div>
+                        <!-- ===== LISTA DE HISTORIAS CLÍNICAS HEMATO ===== -->
+<!-- ===== LISTA DE PACIENTES PARA SELECCIONAR ===== -->
+<section class="table-container">
 
-                            <div class="search-bar">
-                                <div class="search-input-wrapper">
-                                    <i class="fas fa-search"></i>
-                                    <input type="text" id="buscarPaciente"
-                                           placeholder="Buscar por cédula, nombre o historia..."
-                                           oninput="filtrarPacientes()">
-                                </div>
-                            </div>
+    <div class="table-header">
+        <h3>
+            Lista de Pacientes
+            <span class="count-badge">
+                <?php echo count($pacientes ?? []); ?>
+            </span>
+        </h3>
+        <input type="text"
+               id="buscarPaciente"
+               placeholder="Buscar por nombre o cédula..."
+               class="search-input"
+               oninput="filtrarPacientes()">
+    </div>
 
-                            <div class="table-container" style="margin-top: 1.2rem; box-shadow: none; padding: 0;">
-                                <table id="tablaPacientes">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Cédula</th>
-                                            <th>Nombre</th>
-                                            <th>Edad</th>
-                                            <th>Diagnóstico</th>
-                                            <th>Fecha Ingreso</th>
-                                            <th>Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#324</td>
-                                            <td>12345678</td>
-                                            <td>Juan Pérez</td>
-                                            <td>45</td>
-                                            <td>Quimioterapia</td>
-                                            <td>2025-04-10</td>
-                                            <td>
-                                                <button type="button" class="btn-select-paciente" onclick="seleccionarPaciente(this)">
-                                                    <i class="fas fa-check"></i> Seleccionar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>#246</td>
-                                            <td>23456789</td>
-                                            <td>María Gómez</td>
-                                            <td>32</td>
-                                            <td>Quimioterapia</td>
-                                            <td>2025-04-09</td>
-                                            <td>
-                                                <button type="button" class="btn-select-paciente" onclick="seleccionarPaciente(this)">
-                                                    <i class="fas fa-check"></i> Seleccionar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>#328</td>
-                                            <td>34567890</td>
-                                            <td>Carlos Ruiz</td>
-                                            <td>58</td>
-                                            <td>Quimioterapia</td>
-                                            <td>2025-04-08</td>
-                                            <td>
-                                                <button type="button" class="btn-select-paciente" onclick="seleccionarPaciente(this)">
-                                                    <i class="fas fa-check"></i> Seleccionar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>#654</td>
-                                            <td>45678901</td>
-                                            <td>Lucía Fernández</td>
-                                            <td>27</td>
-                                            <td>Quimioterapia</td>
-                                            <td>2025-04-07</td>
-                                            <td>
-                                                <button type="button" class="btn-select-paciente" onclick="seleccionarPaciente(this)">
-                                                    <i class="fas fa-check"></i> Seleccionar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>#505</td>
-                                            <td>56789012</td>
-                                            <td>Pedro Martínez</td>
-                                            <td>61</td>
-                                            <td>Quimioterapia</td>
-                                            <td>2025-04-06</td>
-                                            <td>
-                                                <button type="button" class="btn-select-paciente" onclick="seleccionarPaciente(this)">
-                                                    <i class="fas fa-check"></i> Seleccionar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+    <table id="tablaPacientes">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Edad</th>
+                <th>N° Historia</th>
+                <th>Fecha Ingreso</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (empty($pacientes)): ?>
+                <tr>
+                    <td colspan="7" style="text-align:center; padding: 2rem; color: #94a3b8;">
+                        <i class="fas fa-user-slash" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                        No hay pacientes registrados aún.
+                    </td>
+                </tr>
+            <?php else: ?>
+                <?php foreach ($pacientes as $p): ?>
+                    <tr>
+                        <td>#<?= htmlspecialchars($p['id_paciente']) ?></td>
+                        <td><?= htmlspecialchars($p['nombre_completo']) ?></td>
+                        <td><?= htmlspecialchars($p['cedula']) ?></td>
+                        <td><?= htmlspecialchars($p['edad']) ?></td>
+                        <td><?= htmlspecialchars($p['no_historia']) ?></td>
+                        <td><?= formatear_fecha($p['fecha_ingreso_sistema']) ?></td>
+                        <td>
+                            <button type="button"
+                                    class="btn-select-paciente"
+                                    onclick="seleccionarPaciente(this, <?= $p['id_paciente'] ?>, '<?= htmlspecialchars($p['nombre_completo']) ?>', '<?= htmlspecialchars($p['cedula']) ?>')">
+                                <i class="fas fa-check"></i> Seleccionar
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
 
-                            <div id="pacienteSeleccionado" class="paciente-seleccionado" style="display:none;">
-                                <i class="fas fa-user-check"></i>
-                                <div>
-                                    <strong>Paciente seleccionado:</strong>
-                                    <span id="nombreSeleccionado"></span>
-                                </div>
-                            </div>
-                        </section>
+    <!-- Mensaje de "no hay resultados" -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+        <i class="fas fa-user-slash"></i>
+        <p>No se encontraron pacientes con esos filtros.</p>
+    </div>
+
+    <!-- Aviso de paciente seleccionado -->
+    <div id="pacienteSeleccionado" class="paciente-seleccionado" style="display:none;">
+        <i class="fas fa-user-check"></i>
+        <div>
+            <strong>Paciente seleccionado:</strong>
+            <span id="nombreSeleccionado"></span>
+        </div>
+    </div>
+
+</section>
 
                         <div class="form-actions">
                             <button type="button" class="action-btn save-btn" onclick="continuarPaso('tab-consulta')">
