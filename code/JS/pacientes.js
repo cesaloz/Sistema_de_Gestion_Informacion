@@ -69,5 +69,5 @@ function actualizarContador() {
 }
 
 function agregarPaciente() {
-    window.location.href = "historias/Registro_Paciente.html";
+    window.location.href = "historias/Registro_Paciente.php";
 }

@@ -69,7 +69,7 @@
                         <h2>REGISTRO DE HISTORIA CLÍNICA HEMATO - ONCOLOGÍA</h2>
                         <p class="subtitle">Complete todos los datos para registrar al paciente en el sistema</p>
                     </div>
-                    <button type="button" class="btn-secondary" onclick="window.location.href='../pacientes.html'">
+                    <button type="button" class="btn-secondary" onclick="window.location.href='../pacientes.php'">
                         <i class="fas fa-arrow-left"></i> Volver
                     </button>
                 </div>
@@ -198,18 +198,59 @@
                             <div class="form-grid grid-2">
                                 <div class="sub-column">
                                     <h4 class="sub-title"><i class="fas fa-baby"></i> Lugar de Nacimiento</h4>
-                                    <div class="form-group"><label for="nacEstado">Estado</label><input type="text" id="nacEstado" name="nacEstado" placeholder="Ej: Miranda"></div>
-                                    <div class="form-group"><label for="nacMunicipio">Municipio</label><input type="text" id="nacMunicipio" name="nacMunicipio" placeholder="Ej: Sucre"></div>
-                                    <div class="form-group"><label for="nacParroquia">Parroquia</label><input type="text" id="nacParroquia" name="nacParroquia" placeholder="Ej: Petare"></div>
-                                    <div class="form-group"><label for="nacPais">País</label><input type="text" id="nacPais" name="nacPais" placeholder="Ej: Venezuela"></div>
+                                    <div class="form-group">
+                                        <label for="nacEstado">Estado</label>
+                                    <select id="nacEstado" name="nacEstado" onchange="cargarMunicipios('nac')">
+                                        <option value="">>-- Seleccione --<</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="nacMunicipio">Municipio</label>
+                                    <select id="nacMunicipio" name="nacMunicipio" onchange="cargarParroquias('nac')">
+                                        <option value="">Seleccionar estado primero</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="nacParroquia">Parroquia</label>
+                                    <select id="nacParroquia" name="nacParroquia">
+                                        <option value="">Seleccionar municipio primero</option>
+                                    </select>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label for="nacPais">País</label>
+                                    <input type="text" id="nacPais" name="nacPais" value="Venezuela">
                                 </div>
+                            </div>
 
                                 <div class="sub-column">
-                                    <h4 class="sub-title"><i class="fas fa-map-pin"></i> Lugar de Procedencia</h4>
-                                    <div class="form-group"><label for="proEstado">Estado</label><input type="text" id="proEstado" name="proEstado" placeholder="Ej: Distrito Capital"></div>
-                                    <div class="form-group"><label for="proMunicipio">Municipio</label><input type="text" id="proMunicipio" name="proMunicipio" placeholder="Ej: Libertador"></div>
-                                    <div class="form-group"><label for="proParroquia">Parroquia</label><input type="text" id="proParroquia" name="proParroquia" placeholder="Ej: Catedral"></div>
-                                    <div class="form-group"><label for="proPais">País</label><input type="text" id="proPais" name="proPais" placeholder="Ej: Venezuela"></div>
+                                        <h4 class="sub-title"><i class="fas fa-map-pin"></i> Lugar de Procedencia</h4>
+
+                                    <div class="form-group">
+                                        <label for="proEstado">Estado</label>
+                                            <select id="proEstado" name="proEstado" onchange="cargarMunicipios('pro')">
+                                                <option value="">Seleccionar...</option>
+                                            </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="proMunicipio">Municipio</label>
+                                        <select id="proMunicipio" name="proMunicipio" onchange="cargarParroquias('pro')">
+                                            <option value="">Seleccionar estado primero</option>
+                                        </select>
+                                    </div>
+                                        <div class="form-group">
+                                            <label for="proParroquia">Parroquia</label>
+                                            <select id="proParroquia" name="proParroquia">
+                                                <option value="">Seleccionar municipio primero</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="proPais">País</label>
+                                            <input type="text" id="proPais" name="proPais" value="Venezuela">
+                                        </div>
                                 </div>
 
                                 <div class="form-group">
@@ -330,5 +371,7 @@
     </div>
                     <script src="../JS/Sesion.JS"></script>
                     <script src="../JS/regis.js"></script>
+                    <script src="../js/ubicacion.js"></script>
+
 </body>
 </html>

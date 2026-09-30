@@ -706,3 +706,212 @@
         width: 100%;
     }
 }
+
+/* ===================================================================
+   TABLA DE HISTORIAS (igual estilo a Pacientes)
+   =================================================================== */
+
+.table-container {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.table-header h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dark);
+}
+
+.count-badge {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.55rem;
+    border-radius: 50px;
+}
+
+.search-input {
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.2s ease;
+    min-width: 280px;
+    font-family: inherit;
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(9, 140, 215, 0.12);
+}
+
+#tablaHistorias {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#tablaHistorias thead {
+    background-color: var(--bg-color);
+}
+
+#tablaHistorias th {
+    text-align: left;
+    padding: 0.9rem 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#tablaHistorias td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-dark);
+    vertical-align: middle;
+}
+
+#tablaHistorias tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#tablaHistorias tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges */
+.badge {
+    padding: 0.3rem 0.7rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge.active   { background-color: #dcfce7; color: #16a34a; }
+.badge.inactive { background-color: #fee2e2; color: #dc2626; }
+.badge.pending  { background-color: #fef3c7; color: #d97706; }
+
+/* Botones de acción */
+.action-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0.4rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+    margin-right: 0.2rem;
+}
+
+.action-btn.view   { color: var(--primary-color); }
+.action-btn.view:hover { background-color: #eff6ff; }
+
+.action-btn.edit   { color: #f59e0b; }
+.action-btn.edit:hover { background-color: #fffbeb; }
+
+.action-btn.delete { color: #dc2626; }
+.action-btn.delete:hover { background-color: #fee2e2; }
+
+/* Estado vacío */
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--text-light);
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    color: #cbd5e1;
+    margin-bottom: 0.8rem;
+}
+
+.empty-state p {
+    font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .search-input {
+        min-width: 100%;
+    }
+    .table-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+
+
+/* ===================================================================
+   BOTONES DE ACCIÓN (guardar/continuar/cancelar)
+   =================================================================== */
+
+.action-btn {
+    border: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-decoration: none;
+}
+
+.action-btn i {
+    font-size: 0.9rem;
+}
+
+/* Botón "Continuar" / "Guardar" */
+.save-btn {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(9, 140, 215, 0.25);
+}
+
+.save-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(9, 140, 215, 0.35);
+}
+
+/* Botón "Atrás" / "Cancelar" */
+.cancel-btn {
+    background-color: #e2e8f0;
+    color: #475569;
+}
+
+.cancel-btn:hover {
+    background-color: #cbd5e1;
+}
+
+/* Botón deshabilitado (por si acaso) */
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
