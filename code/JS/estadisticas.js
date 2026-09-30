@@ -3,45 +3,12 @@
    Gráficos de Estadísticas Regionales
    =================================================================== */
 
-/* ===== DATOS DE EJEMPLO =====
-   ⚠️ TEMPORAL: cuando conectes la BD, reemplaza este objeto por un fetch() */
 
-const datosPacientes = {
-    estados: {
-        "Lara":       45,
-        "Portuguesa": 28,
-        "Zulia":      22,
-        "Miranda":    18,
-        "Carabobo":   8,
-        "Distrito Capital": 12,
-        "Táchira":    2,
-        "Yaracuy":    6,
-        "Falcón":     4,
-        "Otros":      2
-    },
-    municipiosPorEstado: {
-        "Lara": {
-            "Iribarren":    20,
-            "Palavecino":   10,
-            "Torres":       7,
-            "Jiménez":      5,
-            "Morán":        3
-        },
-        "Portuguesa": {
-            "Guanare":      12,
-            "Acarigua":     10,
-            "Turén":        4,
-            "Páez":         2
-        },
-        "Zulia": {
-            "Maracaibo":    15,
-            "Cabimas":      4,
-            "San Francisco": 3
-        }
-    }
+let datosPacientes = {
+    estados: {},
+    municipiosPorEstado: {}
 };
 
-/* ===== COLORES ===== */
 const coloresEstados = [
     "#098cd7", "#633ab6", "#10b981", "#f59e0b", "#ef4444",
     "#14b8a6", "#8b5cf6", "#f97316", "#06b6d4", "#84cc16"
@@ -52,7 +19,6 @@ const coloresMunicipios = [
     "#14b8a6", "#8b5cf6", "#f97316"
 ];
 
-/* ===== GRÁFICO DE ESTADOS (Barras) ===== */
 let graficoEstados;
 let graficoMunicipios;
 
@@ -62,6 +28,18 @@ function crearGraficoEstados() {
 
     const estados = Object.keys(datosPacientes.estados);
     const cantidades = Object.values(datosPacientes.estados);
+
+    if (estados.length === 0) {
+        ctx.parentNode.innerHTML = `
+            <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#94a3b8; flex-direction:column;">
+                <i class="fas fa-chart-bar" style="font-size:3rem; margin-bottom:1rem;"></i>
+                <p>No hay datos de estados</p>
+            </div>
+        `;
+        return;
+    }
+
+    if (graficoEstados) graficoEstados.destroy();
 
     graficoEstados = new Chart(ctx, {
         type: "bar",
@@ -128,19 +106,35 @@ function crearGraficoEstados() {
     });
 }
 
-/* ===== GRÁFICO DE MUNICIPIOS (Dona) ===== */
-function crearGraficoMunicipios(estado = "Lara") {
+function crearGraficoMunicipios(estado) {
     const ctx = document.getElementById("graficoMunicipios");
     if (!ctx) return;
+
+    if (!estado) {
+        estado = Object.keys(datosPacientes.estados)[0];
+    }
+
+
 
     const municipios = datosPacientes.municipiosPorEstado[estado] || {};
     const labels = Object.keys(municipios);
     const data = Object.values(municipios);
     const total = data.reduce((a, b) => a + b, 0);
 
-    // Actualizar subtítulo del card
-    const subtitulo = ctx.closest(".chart-card").querySelector(".chart-header p");
+    const subtitulo = ctx.closest(".chart-card")?.querySelector(".chart-header p");
     if (subtitulo) subtitulo.textContent = `Estado: ${estado} (${total} pacientes)`;
+
+    if (graficoMunicipios) graficoMunicipios.destroy();
+
+    if (labels.length === 0) {
+        ctx.parentNode.innerHTML = `
+            <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#94a3b8; flex-direction:column;">
+                <i class="fas fa-chart-pie" style="font-size:3rem; margin-bottom:1rem;"></i>
+                <p>No hay municipios para "${estado}"</p>
+            </div>
+        `;
+        return;
+    }
 
     graficoMunicipios = new Chart(ctx, {
         type: "doughnut",
@@ -187,7 +181,6 @@ function crearGraficoMunicipios(estado = "Lara") {
     });
 }
 
-/* ===== ACTUALIZAR GRÁFICO DE MUNICIPIOS AL HACER CLIC ===== */
 function actualizarGraficoMunicipios(estado) {
     if (graficoMunicipios) {
         graficoMunicipios.destroy();
@@ -196,34 +189,35 @@ function actualizarGraficoMunicipios(estado) {
 }
 
 /* ===== INICIALIZAR ===== */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    
+    try {
+        const respuesta = await fetch("api_estadisticas.php");
+        const data = await respuesta.json();
+
+        if (!data.success) {
+            console.error("Error del servidor:", data.message);
+            return;
+        }
+
+        datosPacientes.estados = data.estados || {};
+        datosPacientes.municipiosPorEstado = data.municipiosPorEstado || {};
+
+        console.log("📊 Estadísticas regionales cargadas desde BD");
+        console.log("   Estados:", datosPacientes.estados);
+
+
+
     crearGraficoEstados();
-    crearGraficoMunicipios("Lara");
 
-    // Mensaje en consola
-    console.log("📊 Estadísticas regionales cargadas");
+    const primerEstado = Object.keys(datosPacientes.estados)[0];
+        if (primerEstado) {
+            crearGraficoMunicipios(primerEstado);
+        } else {
+            crearGraficoMunicipios(); // muestra mensaje vacío
+        }
+
+    } catch (err) {
+        console.error("Error al cargar estadísticas:", err);
+    }
 });
-
-/* ===================================================================
-   🔌 CUANDO CONECTES TU BD, REEMPLAZA LOS DATOS POR ESTO:
-
-   async function cargarEstadisticas() {
-       try {
-           const res = await fetch("http://localhost:3000/api/estadisticas/regionales");
-           const data = await res.json();
-
-           // data.estados = { "Lara": 45, "Zulia": 22, ... }
-           // data.municipiosPorEstado = { "Lara": { "Iribarren": 20, ... }, ... }
-
-           datosPacientes.estados = data.estados;
-           datosPacientes.municipiosPorEstado = data.municipiosPorEstado;
-
-           crearGraficoEstados();
-           crearGraficoMunicipios(Object.keys(data.estados)[0]);
-       } catch (err) {
-           console.error("Error al cargar estadísticas:", err);
-       }
-   }
-
-   document.addEventListener("DOMContentLoaded", cargarEstadisticas);
-   =================================================================== */

@@ -373,5 +373,13 @@
                     <script src="../JS/regis.js"></script>
                     <script src="../js/ubicacion.js"></script>
 
+
+
+
+
+
+                    
+
+
 </body>
 </html>

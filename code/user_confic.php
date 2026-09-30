@@ -66,7 +66,6 @@ try {
     $proMunicipio      = trim($_POST['proMunicipio'] ?? '');
     $proParroquia      = trim($_POST['proParroquia'] ?? '');
     $proPais           = trim($_POST['proPais'] ?? 'Venezuela');
-    
     $direccionHabitacion = trim($_POST['direccionHabitacion'] ?? '');
     $direccionContacto   = trim($_POST['direccionContacto'] ?? '');
     
@@ -114,6 +113,7 @@ try {
                 estado_procedencia,
                 municipio_procedencia,
                 parroquia_procedencia,
+
                 ocupacion,
                 anos_ocupacion,
                 profesion,

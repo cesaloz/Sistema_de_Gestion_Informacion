@@ -173,7 +173,7 @@ try {
                     <td><?= htmlspecialchars($p['nombre_completo']) ?></td>
                     <td><?= htmlspecialchars($p['edad']) ?></td>
                     <td><?= htmlspecialchars($p['no_historia']) ?></td>
-                    <td><?= htmlspecialchars($p['fecha_ingreso_sistema']) ?></td>
+                    <td><?= date('d/m/Y', strtotime($p['fecha_ingreso_sistema'])) ?></td>
                     <td><span class="badge active"><?= htmlspecialchars($p['estado']) ?></span></td>
                     <td>
                         <button class="action-btn view" onclick="verPaciente(<?= $p['id_paciente'] ?>)">

@@ -1,10 +1,10 @@
 /* ===================================================================
    ONCOPATH - ubicacion.js
    Selects dependientes: Estado → Municipio → Parroquia
+   ⚠️ Guarda NOMBRES, no IDs
    =================================================================== */
 
-/* ===== RUTA BASE DE LA API ===== */
-const API_BASE = "/code/venezuela/";
+const API_URL = "../api_ubicacion.php";
 
 /* ===== CARGAR ESTADOS AL INICIO ===== */
 document.addEventListener("DOMContentLoaded", function () {
@@ -18,13 +18,20 @@ async function cargarEstados(prefijo) {
     if (!select) return;
 
     try {
-        const res = await fetch(API_BASE + "estados.php");
-        const estados = await res.json();
+        const res = await fetch(API_URL + "?tipo=estados");
+        const data = await res.json();
+
+        if (!data.success) {
+            console.error("Error:", data.message);
+            return;
+        }
 
         select.innerHTML = '<option value="">Seleccionar...</option>';
-        estados.forEach(e => {
-            select.innerHTML += `<option value="${e.id_estado}">${e.estado}</option>`;
+        data.datos.forEach(e => {
+            // ✅ Guardamos el NOMBRE
+            select.innerHTML += `<option value="${e.estado}">${e.estado}</option>`;
         });
+
     } catch (err) {
         console.error("Error al cargar estados:", err);
     }
@@ -32,31 +39,38 @@ async function cargarEstados(prefijo) {
 
 /* ===== CARGAR MUNICIPIOS ===== */
 async function cargarMunicipios(prefijo) {
-    const idEstado = document.getElementById(prefijo + "Estado").value;
+    const selectEstado = document.getElementById(prefijo + "Estado");
     const selectMunicipio = document.getElementById(prefijo + "Municipio");
     const selectParroquia = document.getElementById(prefijo + "Parroquia");
 
-    // Limpiar los selects siguientes
+    if (!selectEstado || !selectMunicipio || !selectParroquia) return;
+
+    const nombreEstado = selectEstado.value;
+
     selectMunicipio.innerHTML = '<option value="">Seleccionar...</option>';
     selectParroquia.innerHTML = '<option value="">Seleccionar municipio primero</option>';
 
-    if (!idEstado) {
+    if (!nombreEstado) {
         selectMunicipio.innerHTML = '<option value="">Seleccionar estado primero</option>';
         return;
     }
 
     try {
-        const res = await fetch(API_BASE + "municipios.php?id_estado=" + idEstado);
-        const municipios = await res.json();
+        const res = await fetch(
+            API_URL + "?tipo=municipios&filtro=" + encodeURIComponent(nombreEstado)
+        );
+        const data = await res.json();
 
-        if (municipios.length === 0) {
+        if (!data.success || data.datos.length === 0) {
             selectMunicipio.innerHTML = '<option value="">Sin municipios</option>';
             return;
         }
 
-        municipios.forEach(m => {
-            selectMunicipio.innerHTML += `<option value="${m.id_municipio}">${m.municipio}</option>`;
+        data.datos.forEach(m => {
+            // ✅ Guardamos el NOMBRE
+            selectMunicipio.innerHTML += `<option value="${m.municipio}">${m.municipio}</option>`;
         });
+
     } catch (err) {
         console.error("Error al cargar municipios:", err);
     }
@@ -64,28 +78,36 @@ async function cargarMunicipios(prefijo) {
 
 /* ===== CARGAR PARROQUIAS ===== */
 async function cargarParroquias(prefijo) {
-    const idMunicipio = document.getElementById(prefijo + "Municipio").value;
+    const selectMunicipio = document.getElementById(prefijo + "Municipio");
     const selectParroquia = document.getElementById(prefijo + "Parroquia");
+
+    if (!selectMunicipio || !selectParroquia) return;
+
+    const nombreMunicipio = selectMunicipio.value;
 
     selectParroquia.innerHTML = '<option value="">Seleccionar...</option>';
 
-    if (!idMunicipio) {
+    if (!nombreMunicipio) {
         selectParroquia.innerHTML = '<option value="">Seleccionar municipio primero</option>';
         return;
     }
 
     try {
-        const res = await fetch(API_BASE + "parroquias.php?id_municipio=" + idMunicipio);
-        const parroquias = await res.json();
+        const res = await fetch(
+            API_URL + "?tipo=parroquias&filtro=" + encodeURIComponent(nombreMunicipio)
+        );
+        const data = await res.json();
 
-        if (parroquias.length === 0) {
+        if (!data.success || data.datos.length === 0) {
             selectParroquia.innerHTML = '<option value="">Sin parroquias</option>';
             return;
         }
 
-        parroquias.forEach(p => {
-            selectParroquia.innerHTML += `<option value="${p.id_parroquia}">${p.parroquia}</option>`;
+        data.datos.forEach(p => {
+            // ✅ Guardamos el NOMBRE
+            selectParroquia.innerHTML += `<option value="${p.parroquia}">${p.parroquia}</option>`;
         });
+
     } catch (err) {
         console.error("Error al cargar parroquias:", err);
     }
