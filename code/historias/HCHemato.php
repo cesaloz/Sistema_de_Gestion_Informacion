@@ -260,19 +260,19 @@ $pacientes = $stmt->fetchAll();
                                 <label>Tumor Primario</label>
                                 <div class="radio-inline">
                                     <label class="radio-pill">
-                                        <input type="radio" name="tumorPrimario" value="Único">
+                                        <input type="radio" name="tumorPrimario" value="UNICO">
                                         <span>Único</span>
                                     </label>
                                     <label class="radio-pill">
-                                        <input type="radio" name="tumorPrimario" value="Múltiple">
-                                        <span>Múltiple</span>
+                                        <input type="radio" name="tumorPrimario" value="MULTIPLE">
+                                        <span>Multiple</span>
                                     </label>
                                     <label class="radio-pill">
-                                        <input type="radio" name="tumorPrimario" value="Dudoso">
+                                        <input type="radio" name="tumorPrimario" value="DUDOSO">
                                         <span>Dudoso</span>
                                     </label>
                                     <label class="radio-pill">
-                                        <input type="radio" name="tumorPrimario" value="No Especificado">
+                                        <input type="radio" name="tumorPrimario" value="NO ESPECIFICADO">
                                         <span>No Especificado</span>
                                     </label>
                                 </div>
@@ -314,35 +314,35 @@ $pacientes = $stmt->fetchAll();
                                 <label>Extensión Clínica de los Tumores Sólidos</label>
                                 <div class="radio-list">
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="Carcinoma">
+                                        <input type="radio" name="extensionTumoresSolidos" value="CARCINOMA IN SITU">
                                         <span>Carcinoma</span>
                                     </label>
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="Localizada">
+                                        <input type="radio" name="extensionTumoresSolidos" value="LOCALIZADA">
                                         <span>Localizada</span>
                                     </label>
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="Extensión Directa">
+                                        <input type="radio" name="extensionTumoresSolidos" value="EXTENSION DIRECTA">
                                         <span>Extensión Directa</span>
                                     </label>
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="Linfáticos Regionales Comprometidos">
+                                        <input type="radio" name="extensionTumoresSolidos" value="LINFATICOS REGIONALES COMPROMETIDOS">
                                         <span>Linfáticos Regionales Comprometidos</span>
                                     </label>
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="Extensión Directa y Linfáticos Regionales Comprometidos">
+                                        <input type="radio" name="extensionTumoresSolidos" value="EXTENSION DIRECTA Y LINFATICOS REGIONALES COMPROMETIDOS">
                                         <span>Extensión Directa y Linfáticos Regionales Comprometidos</span>
                                     </label>
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="Metástasis a Distancia">
+                                        <input type="radio" name="extensionTumoresSolidos" value="METASTASIS A DISTANCIA">
                                         <span>Metástasis a Distancia</span>
                                     </label>
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="No Duplicable">
+                                        <input type="radio" name="extensionTumoresSolidos" value="NO APLICABLE">
                                         <span>No Duplicable</span>
                                     </label>
                                     <label class="radio-line">
-                                        <input type="radio" name="extensionTumoresSolidos" value="Sin Especificaciones">
+                                        <input type="radio" name="extensionTumoresSolidos" value="SIN ESPECIFICACIONES">
                                         <span>Sin Especificaciones</span>
                                     </label>
                                 </div>
@@ -377,21 +377,34 @@ $pacientes = $stmt->fetchAll();
                                         <label class="radio-pill"><input type="radio" name="llcRai" value="3"><span>3</span></label>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label>Leucemia Meloide Aguda (FAB)</label>
+                                    <div class="radio-inline">
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M0"><span>M0</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M1"><span>M1</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M2"><span>M2</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M3"><span>M3</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M4"><span>M4</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M5"><span>M5</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M6"><span>M6</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llcFab1" value="M7"><span>M7</span></label>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label>Leucemia Mieloide Crónica</label>
                                     <div class="radio-inline">
-                                        <label class="radio-pill"><input type="radio" name="lmcFase" value="Crónica"><span>Crónica</span></label>
-                                        <label class="radio-pill"><input type="radio" name="lmcFase" value="Acelerada"><span>Acelerada</span></label>
-                                        <label class="radio-pill"><input type="radio" name="lmcFase" value="Crisis Blástica"><span>Crisis Blástica</span></label>
+                                        <label class="radio-pill"><input type="radio" name="lmcFase" value="CRONICA"><span>Crónica</span></label>
+                                        <label class="radio-pill"><input type="radio" name="lmcFase" value="ACELERADA"><span>Acelerada</span></label>
+                                        <label class="radio-pill"><input type="radio" name="lmcFase" value="CRISIS BLASTICA"><span>Crisis Blástica</span></label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Leucemia Linfoide Aguda (FBA)</label>
                                     <div class="radio-inline">
-                                        <label class="radio-pill"><input type="radio" name="llaFba" value="AR"><span>AR</span></label>
-                                        <label class="radio-pill"><input type="radio" name="llaFba" value="BR"><span>BR</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llaFba2" value="AR"><span>AR</span></label>
+                                        <label class="radio-pill"><input type="radio" name="llaFba2" value="BR"><span>BR</span></label>
                                     </div>
                                 </div>
 
@@ -421,7 +434,7 @@ $pacientes = $stmt->fetchAll();
                                         <label class="radio-pill"><input type="radio" name="linfomaEstadio" value="S"><span>S</span></label>
                                         <label class="radio-pill"><input type="radio" name="linfomaEstadio" value="MO"><span>MO</span></label>
                                         <label class="radio-pill"><input type="radio" name="linfomaEstadio" value="LCR"><span>LCR</span></label>
-                                        <label class="radio-pill"><input type="radio" name="linfomaEstadio" value="Otro"><span>Otro</span></label>
+                                        <label class="radio-pill"><input type="radio" name="linfomaEstadio" value="OTROS"><span>Otro</span></label>
                                     </div>
                                 </div>
                             </div>
@@ -614,8 +627,12 @@ $pacientes = $stmt->fetchAll();
                                     <input type="text" id="fc" name="fc" placeholder="Ej: 80 lpm">
                                 </div>
                                 <div class="form-group">
+                                    <label for="fc">Peso </label>
+                                    <input type="text" id="fc" name="fp" placeholder="Ej: 80 Kg">
+                                </div>
+                                <div class="form-group">
                                     <label for="fr">Temperatura </label>
-                                    <input type="text" id="fr" name="fr" placeholder="Ej: 36.5 °">
+                                    <input type="text" id="fr" name="ft" placeholder="Ej: 36.5 °">
                                 </div>
                                 <div class="form-group">
                                     <label for="fr">Frecuencia respiratoria </label>

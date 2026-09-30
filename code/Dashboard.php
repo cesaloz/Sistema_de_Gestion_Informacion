@@ -175,7 +175,7 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                     <div class="card">
                         <div class="card-icon red"><i class="fas fa-exclamation-triangle"></i></div>
                         <div class="card-info">
-                            <h3>3</h3>
+                            <h3><?php echo $stats ['ciudades']; ?></h3>
                             <p>Casos Pendientes</p>
                         </div>
                     </div>

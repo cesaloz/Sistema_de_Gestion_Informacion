@@ -1,8 +1,6 @@
-/* ===== PESTAÑAS ===== */
 function mostrarTab(e, id) {
     if (e) e.preventDefault();
 
-    // Bloqueo de pestañas
     if (id === "tab-consulta" && document.getElementById("btnTabConsulta")?.disabled) {
         alert("⚠️ Primero debe seleccionar un paciente de la tabla.");
         return;
@@ -137,43 +135,63 @@ function filtrarPacientes() {
     });
 }
 
-/* ===== GUARDAR HISTORIA ===== */
-function guardarPaciente() {
+//* ===== GUARDAR HISTORIA CLÍNICA ===== */
+async function guardarPaciente() {
     const form = document.getElementById("formPaciente");
-    const datos = {};
+    if (!form) return;
 
-    form.querySelectorAll("input, select, textarea").forEach(campo => {
-        if (!campo.name) return;
-
-        if (campo.type === "radio") {
-            if (campo.checked) datos[campo.name] = campo.value;
-        } else if (campo.type === "checkbox") {
-            datos[campo.name] = campo.checked;
-        } else {
-            datos[campo.name] = campo.value;
-        }
-    });
-
-    if (!datos.pacienteIdSeleccionado) {
-        alert("⚠️ Debe seleccionar un paciente antes de guardar.");
-        mostrarTab(null, "tab-buscar");
+    // 
+    const pacienteId = document.getElementById("pacienteIdSeleccionado")?.value;
+    if (!pacienteId) {
+        alert("⚠️ Debe seleccionar un paciente primero.");
         return;
     }
 
-    console.log("📋 Datos de Historia Clínica Hemato:", datos);
+    const diagnostico = document.getElementById("diagnosticoInicio")?.value.trim();
+    if (!diagnostico) {
+        alert("⚠️ Debe completar el Diagnóstico de Inicio.");
+        mostrarTab(null, "tab-consulta");
+        return;
+    }
 
-    /* ==========================================================
-       🔌 AQUÍ ENLAZARÁS TU BD:
+    const enfermedad = document.getElementById("Enfermedad_Actual")?.value.trim();
+    if (!enfermedad) {
+        alert("⚠️ Debe describir la Enfermedad Actual.");
+        mostrarTab(null, "tab-clinica");
+        return;
+    }
 
-       fetch("http://localhost:3000/api/historias/hemato", {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(datos)
-       })
-       ========================================================== */
+    const formData = new FormData(form);
+    
+    formData.set("pacienteIdSeleccionado", pacienteId);
 
-    alert(`✅ Historia Clínica guardada correctamente para el paciente ${datos.pacienteIdSeleccionado}.`);
-    window.location.href = "HCHemato.html";
+    const btnGuardar = form.querySelector('button[type="submit"]');
+    if (btnGuardar) {
+        btnGuardar.disabled = true;
+        btnGuardar.textContent = "Guardando...";
+    }
+
+    try {
+        const respuesta = await fetch("../regis_HCHemato.php", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await respuesta.json();
+
+        if (data.success) {
+            alert(`✅ Historia Clínica guardada correctamente.\nID Historia: ${data.id_historia}`);
+            window.location.href = "HCHemato.php";
+        } else {
+            alert(`❌ Error: ${data.message}`);
+        }
+    } catch (error) {
+        console.error("Error detallado:", error);
+        alert("❌ Error de conexión. Revise la consola (F12).");
+    } finally {
+        if (btnGuardar) {
+            btnGuardar.disabled = false;
+            btnGuardar.textContent = "Guardar Historia";
+        }
+    }
 }
-
-
