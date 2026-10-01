@@ -32,18 +32,25 @@ require_once 'config/inic.php';
                 WHERE nombre_usuario = :usuario
                 LIMIT 1";
 
-                $stmt = $conn->prepare($sql);
-                $stmt->execute([':usuario' => $usuario_ingresado]);
-                $user = $stmt->fetch();
+                $stmt = $conn->prepare("
+    SELECT id_usuario, nombre_usuario, nombre_completo, rol_sistema
+    FROM usuarios
+    WHERE nombre_usuario = :usuario
+      AND contrasena_hash = crypt(:contrasena, contrasena_hash)
+      AND status = true
+");
+$stmt->execute([
+    ':usuario' => $usuario_ingresado,
+    ':contrasena' => $contrasena
+]);
+$user = $stmt->fetch();
 
                 if($user){
 
                     if(!$user['status']){
-                        $error = 'Su cuenta esta desactivada por pendejo carajo';
+                        $error ='Su cuenta está desactivada. Contacte al administrador del sistema.';
                     }else {
-                        $hash_ingresado = hash('sha256', $contrasena);
-
-                        if($hash_ingresado === $user['contrasena_hash']){
+                        if (password_verify($contrasena, $user['contrasena_hash'])) {
 
                         $_SESSION['id_usuario'] = $user['id_usuario'];
                         $_SESSION['nombre_usuario'] = $user['nombre_usuario'];

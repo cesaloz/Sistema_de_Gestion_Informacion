@@ -33,12 +33,12 @@ try {
     // Enfermedad actual
     $enfermedadActual       = trim($_POST['enfermedadActual'] ?? '');
     $aspectoGeneral         = trim($_POST['aspectoGeneral'] ?? '');
-    $localizacionPrimaria   = trim($_POST['localizacionPrimaria'] ?? '');
+    $ecog                   = trim($_POST['ecog'] ?? '');
     $KARNOFSKY              = trim($_POST['KARNOFSKY'] ?? '');
     $ta                     = trim($_POST['ta'] ?? '');
     $fc                     = trim($_POST['fc'] ?? '');
-    $fp                     = trim($_POST['fc'] ?? '');
-    $ft                     = trim($_POST['fc'] ?? '');
+    $fp                     = trim($_POST['fp'] ?? '');
+    $ft                     = trim($_POST['ft'] ?? '');
     $fr                     = trim($_POST['fr'] ?? '');
 
     // Plan de tratamiento
@@ -128,10 +128,11 @@ try {
     ]);
 
     $idHistoria = $stmt->fetchColumn();
+        if (!$idHistoria) {
+                throw new Exception('No se pudo obtener el ID de la historia');
+            }
 
-    // ==========================================
-    // 5. INSERTAR EN `consultas_oncologicas`
-    // ==========================================
+
     $sqlConsulta = "INSERT INTO consultas_oncologicas (
                         id_historia_onco,
                         fecha_consulta,
@@ -173,7 +174,7 @@ try {
         ':id_historia'       => $idHistoria,
         ':enfermedad_actual' => $enfermedadActual ?: null,
         ':examen_fisico'     => $aspectoGeneral ?: null,
-        ':estado_ecog'     => $localizacionPrimaria ?: null,
+        ':estado_ecog'       => $ecog !== '' ? (int)$ecog : null,
         ':estado_karnofsky'  => $KARNOFSKY ?: null,
         ':ta'                => $ta ?: null,
         ':pulso'             => $fc ?: null,
@@ -204,7 +205,7 @@ try {
 
     $mapeoAntecedentes = [
         'Cardiovascular'   => $detalleCardio,
-        'Respiratorio'     => $detalleResp,
+        'Respiratorios'     => $detalleResp,
         'Gastrointestinal' => $detalleGastro,
         'Renal'            => $detalleRenal,
         'Tabaco y/o Licor' => $detalleTabaco,
