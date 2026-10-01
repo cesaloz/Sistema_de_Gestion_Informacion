@@ -15,7 +15,7 @@ try {
             COALESCE(NULLIF(TRIM(estado_procedencia), ''), 'Sin especificar') AS estado,
             COUNT(*) AS total
         FROM pacientes
-        GROUP BY estado_procedencia
+        GROUP BY COALESCE(NULLIF(TRIM(estado_procedencia), ''), 'Sin especificar')
         ORDER BY total DESC
         LIMIT 15
     ";
@@ -36,8 +36,10 @@ try {
             COALESCE(NULLIF(TRIM(municipio_procedencia), ''), 'Sin especificar') AS municipio,
             COUNT(*) AS total
         FROM pacientes
-        GROUP BY estado_procedencia, municipio_procedencia
-        ORDER BY estado_procedencia, total DESC
+        GROUP BY 
+        COALESCE(NULLIF(TRIM(estado_procedencia), ''), 'Sin especificar'),
+        COALESCE(NULLIF(TRIM(municipio_procedencia), ''), 'Sin especificar')
+        ORDER BY estado, total DESC;
     ";
     $stmt = $conn->query($sqlMunicipios);
     $filasMuni = $stmt->fetchAll(PDO::FETCH_ASSOC);

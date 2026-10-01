@@ -136,7 +136,7 @@ verificar_sesion();
                             <div class="form-grid grid-3">
                                 <div class="form-group">
                                     <label for="fecha">Fecha del Registro *</label>
-                                    <input type="date" id="fecha" name="fecha" required>
+                                    <input type="date" id="fecha" name="fecha" value="<?php echo date('Y-m-d');?>" readonly required>
                                 </div>
                                 <div class="form-group">
                                     <label for="numeroHistoria">Número de Historia *</label>

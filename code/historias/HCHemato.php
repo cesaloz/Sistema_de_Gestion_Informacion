@@ -238,7 +238,7 @@ $pacientes = $stmt->fetchAll();
                             <div class="form-grid grid-3">
                                 <div class="form-group">
                                     <label for="fechaPrimeraConsulta">Fecha de la Primera Consulta</label>
-                                    <input type="date" id="fechaPrimeraConsulta" name="fechaPrimeraConsulta">
+                                    <input type="date" id="fechaPrimeraConsulta" name="fechaPrimeraConsulta" step="1" value="<?php echo date('Y-m-d\TH:i:s'); ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="fechaPrimerDiagnostico">Fecha del Primer Diagnóstico</label>
@@ -500,7 +500,7 @@ $pacientes = $stmt->fetchAll();
 
                                     <div class="ant-row">
                                         <label class="ant-item">
-                                            <input type="checkbox" name="antecedentes" value="Respiratorio">
+                                            <input type="checkbox" name="antecedentes" value="Respiratorios">
                                             <span>Respiratorio</span>
                                         </label>
                                         <div class="ant-extra">
@@ -606,7 +606,7 @@ $pacientes = $stmt->fetchAll();
                             <div class="form-grid grid-2" style="margin-top: 1.2rem;">
                                 <div class="form-group">
                                     <label for="localizacionPrimaria">Grupo Cooperativo Oncológico del Este (E.C.O.G)</label>
-                                    <textarea id="localizacionPrimaria" name="localizacionPrimaria" rows="3"
+                                    <textarea id="ecog" name="ecog" rows="3"
                                               placeholder=" 0 al 5..."></textarea>
                                 </div>
                                 <div class="form-group">
@@ -628,11 +628,11 @@ $pacientes = $stmt->fetchAll();
                                 </div>
                                 <div class="form-group">
                                     <label for="fc">Peso </label>
-                                    <input type="text" id="fc" name="fp" placeholder="Ej: 80 Kg">
+                                    <input type="text" id="fp" name="fp" placeholder="Ej: 80 Kg">
                                 </div>
                                 <div class="form-group">
                                     <label for="fr">Temperatura </label>
-                                    <input type="text" id="fr" name="ft" placeholder="Ej: 36.5 °">
+                                    <input type="text" id="ft" name="ft" placeholder="Ej: 36.5 °">
                                 </div>
                                 <div class="form-group">
                                     <label for="fr">Frecuencia respiratoria </label>
