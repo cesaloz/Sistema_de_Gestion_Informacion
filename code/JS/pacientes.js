@@ -1,3 +1,5 @@
+/* ===== CONSTANTE BASE_URL ===== */
+const BASE_URL = "/code";
 /* ===== VER PACIENTE ===== */
 function verPaciente(nombre) {
     alert(`👁️ Viendo ficha de: ${nombre}`);
@@ -71,3 +73,114 @@ function actualizarContador() {
 function agregarPaciente() {
     window.location.href = "historias/Registro_Paciente.php";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===================================================================
+   MODAL DE DATOS DEL PACIENTE
+   =================================================================== */
+
+/* ===== ABRIR MODAL Y CARGAR DATOS ===== */
+async function abrirModalPaciente(idPaciente) {
+    const modal = document.getElementById("modalVerPaciente");
+    modal.classList.add("active");
+
+    // Mostrar "Cargando..." temporal
+    document.getElementById("modalNombre").textContent = "Cargando...";
+    document.getElementById("modalCedula").textContent = "—";
+
+    try {
+        const res = await fetch(`${BASE_URL}/api_obtener_paciente.php?id=${idPaciente}`);
+
+        if (!res.ok) {
+            throw new Error(`Error HTTP ${res.status}`);
+        }
+
+        const p = await res.json();
+
+        if (p.error) {
+            throw new Error(p.error);
+        }
+
+        // ===== LLENAR EL MODAL =====
+        // Encabezado
+        document.getElementById("modalNombre").textContent = p.nombre_completo || "—";
+        document.getElementById("modalCedula").textContent = "Cédula: " + (p.cedula || "—");
+
+        // Datos personales
+        document.getElementById("modalHistoria").textContent = p.no_historia || "—";
+        document.getElementById("modalCedulaField").textContent = p.cedula || "—";
+        document.getElementById("modalEdad").textContent = (p.edad || "—") + " años";
+        document.getElementById("modalSexo").textContent = 
+            p.sexo === "M" ? "Masculino" : p.sexo === "F" ? "Femenino" : "—";
+        document.getElementById("modalFechaNac").textContent = formatearFecha(p.fecha_nacimiento);
+        document.getElementById("modalRaza").textContent = p.raza_grupo_etnico || "—";
+
+        // Ubicación
+        document.getElementById("modalEstadoNac").textContent = p.estado_nacimiento || "—";
+        document.getElementById("modalMunicipioNac").textContent = p.municipio_nacimiento || "—";
+        document.getElementById("modalEstadoProc").textContent = p.estado_procedencia || "—";
+        document.getElementById("modalMunicipioProc").textContent = p.municipio_procedencia || "—";
+
+        // Contacto
+        document.getElementById("modalDireccion").textContent = p.direccion_habitacion || "—";
+        document.getElementById("modalTelefono").textContent = p.telefono_contac || "—";
+        document.getElementById("modalEmail").textContent = p.email || "—";
+
+        // Botón PDF
+        document.getElementById("btnDescargarPDF").href = 
+            `${BASE_URL}/generar_pdf.php?id=${idPaciente}`;
+
+    } catch (err) {
+        console.error("Error al cargar paciente:", err);
+        document.getElementById("modalNombre").textContent = "Error";
+        document.getElementById("modalCedula").textContent = err.message;
+    }
+}
+
+/* ===== CERRAR MODAL ===== */
+function cerrarModalPaciente() {
+    document.getElementById("modalVerPaciente").classList.remove("active");
+}
+
+/* ===== FORMATEAR FECHA ===== */
+function formatearFecha(fecha) {
+    if (!fecha) return "—";
+    const d = new Date(fecha);
+    if (isNaN(d)) return "—";
+    return d.toLocaleDateString("es-VE");
+}
+
+/* ===== CERRAR AL HACER CLIC FUERA ===== */
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("modalVerPaciente");
+    if (modal) {
+        modal.addEventListener("click", function (e) {
+            if (e.target === this) {
+                cerrarModalPaciente();
+            }
+        });
+    }
+});
+
+/* ===== CERRAR CON TECLA ESC ===== */
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+        cerrarModalPaciente();
+    }
+});
+
+

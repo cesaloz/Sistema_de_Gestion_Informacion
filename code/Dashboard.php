@@ -101,7 +101,7 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                         <li><a href="diagnostico.php"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
                         <li><a href="consulta.php"><i class="fas fa-comments"></i> Consulta</a></li>
                         <li><a href="cirugia.php"><i class="fas fa-syringe"></i> Cirugía</a></li>
-                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                        <li><a href="Historiales.php"><i class="fas fa-file-medical"></i> Historiales</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -197,7 +197,6 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                                 <th>Diagnóstico</th>
                                 <th>Fecha Ingreso</th>
                                 <th>Estado</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -217,14 +216,7 @@ registrar_actividad('Acceso al dashboard', 'sistema');
                                         <td><?= htmlspecialchars($p['diagnostico'] ?? '—') ?></td>
                                         <td><?= date('d/m/Y', strtotime($p['fecha_ingreso_sistema'])) ?></td>
                                         <td><span class="badge active"><?= htmlspecialchars($p['estado']) ?></span></td>
-                                        <td>
-                                            <button class="action-btn view" onclick="verPaciente(<?= $p['id_paciente'] ?>)">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="action-btn edit" onclick="editarPaciente(<?= $p['id_paciente'] ?>)">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </td>
+                                        
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>

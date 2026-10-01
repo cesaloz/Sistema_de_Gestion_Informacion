@@ -46,6 +46,7 @@ try {
     <title>ONCOPATH - Pacientes</title>
     <link rel="stylesheet" href="css/Base.css">
     <link rel="stylesheet" href="css/Pacientes.css">
+    <link rel="stylesheet" href="css/VentanaDatos.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -62,7 +63,7 @@ try {
             <div class="BarraDere">
                 <div class="user-info">
                     <i class="fas fa-user-circle user-avatar"></i>
-                    <span class="user-name">Dra. Ana López</span>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['nombre_completo']); ?></span>
                 </div>
                 <button class="logout-btn" onclick="cerrarSesion()">
                     <i class="fas fa-sign-out-alt"></i>
@@ -96,7 +97,7 @@ try {
                         <li><a href="diagnostico.php"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
                         <li><a href="consulta.php"><i class="fas fa-comments"></i> Consulta</a></li>
                         <li><a href="cirugia.php"><i class="fas fa-syringe"></i> Cirugía</a></li>
-                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                        <li><a href="Historiales.php"><i class="fas fa-file-medical"></i> Historiales</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -117,7 +118,7 @@ try {
                 <section class="filters-bar">
                     <div class="filter-group">
                         <label><i class="fas fa-search"></i> Buscar</label>
-                        <input type="text" id="buscador" placeholder="Nombre, cédula o diagnóstico..." oninput="filtrarTabla()">
+                        <input type="text" id="buscador" placeholder="Nombre o cédula..." oninput="filtrarTabla()">
                     </div>
 
                     <div class="filter-group">
@@ -152,7 +153,7 @@ try {
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Edad</th>
-                                <th>Diagnóstico</th>
+                                <th>N° de Historia</th>
                                 <th>Fecha Ingreso</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -176,8 +177,8 @@ try {
                     <td><?= date('d/m/Y', strtotime($p['fecha_ingreso_sistema'])) ?></td>
                     <td><span class="badge active"><?= htmlspecialchars($p['estado']) ?></span></td>
                     <td>
-                        <button class="action-btn view" onclick="verPaciente(<?= $p['id_paciente'] ?>)">
-                            <i class="fas fa-eye"></i>
+                        <button class="action-btn view" onclick="abrirModalPaciente(<?= $p['id_paciente'] ?>)">
+                        <i class="fas fa-eye"></i>
                         </button>
                         <button class="action-btn edit" onclick="editarPaciente(<?= $p['id_paciente'] ?>)">
                             <i class="fas fa-edit"></i>
@@ -206,6 +207,123 @@ try {
                     <button class="page-btn">3</button>
                     <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
                 </div>
+
+
+
+
+
+
+                <!-- ===== MODAL: DATOS DEL PACIENTE ===== -->
+<div class="modal-overlay" id="modalVerPaciente">
+    <div class="modal-card">
+
+        <!-- Encabezado -->
+        <div class="modal-header">
+            <div class="modal-header-left">
+                <div class="modal-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div>
+                    <h2 id="modalNombre">Cargando...</h2>
+                    <p id="modalCedula">—</p>
+                </div>
+            </div>
+            <button class="modal-close" onclick="cerrarModalPaciente()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Cuerpo con secciones -->
+        <div class="modal-body">
+
+            <!-- Datos personales -->
+            <div class="modal-section">
+                <h3><i class="fas fa-id-card"></i> Datos Personales</h3>
+                <div class="modal-grid">
+                    <div class="modal-field">
+                        <label>N° Historia</label>
+                        <span id="modalHistoria">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Cédula</label>
+                        <span id="modalCedulaField">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Edad</label>
+                        <span id="modalEdad">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Sexo</label>
+                        <span id="modalSexo">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Fecha de Nacimiento</label>
+                        <span id="modalFechaNac">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Raza / Grupo Étnico</label>
+                        <span id="modalRaza">—</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Ubicación -->
+            <div class="modal-section">
+                <h3><i class="fas fa-map-marked-alt"></i> Ubicación</h3>
+                <div class="modal-grid">
+                    <div class="modal-field">
+                        <label>Estado (Nacimiento)</label>
+                        <span id="modalEstadoNac">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Municipio (Nacimiento)</label>
+                        <span id="modalMunicipioNac">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Estado (Procedencia)</label>
+                        <span id="modalEstadoProc">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Municipio (Procedencia)</label>
+                        <span id="modalMunicipioProc">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacto -->
+            <div class="modal-section">
+                <h3><i class="fas fa-address-book"></i> Contacto</h3>
+                <div class="modal-grid">
+                    <div class="modal-field full">
+                        <label>Dirección</label>
+                        <span id="modalDireccion">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Teléfono</label>
+                        <span id="modalTelefono">—</span>
+                    </div>
+                    <div class="modal-field">
+                        <label>Email</label>
+                        <span id="modalEmail">—</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pie -->
+        <div class="modal-footer">
+            <button class="action-btn cancel-btn" onclick="cerrarModalPaciente()">
+                <i class="fas fa-times"></i> Cerrar
+            </button>
+            <a id="btnDescargarPDF" href="#" target="_blank" class="action-btn save-btn">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </a>
+        </div>
+
+    </div>
+</div>
 
             </main>
         </div>

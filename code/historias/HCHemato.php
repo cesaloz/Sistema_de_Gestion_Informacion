@@ -56,7 +56,7 @@ $pacientes = $stmt->fetchAll();
             <div class="BarraDere">
                 <div class="user-info">
                     <i class="fas fa-user-circle user-avatar"></i>
-                    <span class="user-name">Dra. Ana López</span>
+                    <span class="user-name"><?php echo htmlspecialchars($_SESSION['nombre_completo']); ?></span>
                 </div>
                 <button class="logout-btn" onclick="cerrarSesion()">
                     <i class="fas fa-sign-out-alt"></i>
@@ -90,7 +90,7 @@ $pacientes = $stmt->fetchAll();
                         <li><a href="../diagnostico.php"><i class="fas fa-stethoscope"></i> Diagnóstico</a></li>
                         <li><a href="../consulta.php"><i class="fas fa-comments"></i> Consulta</a></li>
                         <li><a href="../cirugia.php"><i class="fas fa-syringe"></i> Cirugía</a></li>
-                        <li><a href="#"><i class="fas fa-file-medical"></i> Historiales</a></li>
+                        <li><a href="../Historiales.php"><i class="fas fa-file-medical"></i> Historiales</a></li>
                     </ul>
                 </nav>
             </aside>
